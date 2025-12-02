@@ -73,7 +73,6 @@ function getFilterFromSearchParams(searchParams) {
 
 
 function _createToys() {
-    console.log('df')
     let toys = utilService.loadFromStorage(TOY_KEY)
     if (!toys || !toys.length) {
         toys = []

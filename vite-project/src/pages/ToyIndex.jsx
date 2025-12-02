@@ -1,7 +1,9 @@
+import { useSelector } from 'react-redux'
 import { utilService } from '../../services/util.service.js'
 import { Footer } from "../cmps/Footer.jsx"
-
+import { ToyList } from '../cmps/ToyList.jsx'
 import {useEffect, useState} from 'react'
+import { loadToys } from '../../store/toy.actions.js'
 // const { Link, useSearchParams } = ReactRouterDOM
 // const { useSelector } = ReactRedux
 // const { useNavigate } = ReactRouter
@@ -9,8 +11,8 @@ import {useEffect, useState} from 'react'
 
 
 export function ToyIndex() {
-    const toys = useSelector((state) => state.todos)
-    // const isLoading = useSelector((state) => state.isLoading)
+    const toys = useSelector((state) => state.toys)
+    const isLoading = useSelector((state) => state.isLoading)
     // const navigate = useNavigate()
 
 

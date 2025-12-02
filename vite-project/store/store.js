@@ -2,9 +2,9 @@
 import {createStore} from 'redux';
 
 
-export const SET_TODOS = 'SET_TOYS';
-export const REMOVE_TODO = 'REMOVE_TOY';
-export const ADD_TODO = 'ADD_TOY';
+export const SET_TOYS = 'SET_TOYS';
+export const REMOVE_TOY = 'REMOVE_TOY';
+export const ADD_TOY = 'ADD_TOY';
 export const SET_LOADING = 'SET_LOADING';
 
 const initialState = {
@@ -16,14 +16,14 @@ const initialState = {
 
 function appReducer(state = initialState, cmd = {}) {
     switch (cmd.type) {
-        case SET_TODOS:
-            return { ...state, todos: cmd.todos };
+        case SET_TOYS:
+            return { ...state, toys: cmd.toys };
 
-        case REMOVE_TODO:
-            return { ...state, todos: state.todos.filter(todo => todo._id !== cmd.todoId) };
+        case REMOVE_TOY:
+            return { ...state, toys: state.toys.filter(toy => toy._id !== cmd.toyId) };
 
-        case ADD_TODO:
-            return { ...state, todos: [...state.todos, cmd.todo] };
+        case ADD_TOY:
+            return { ...state, toys: [...state.toys, cmd.toy] };
 
         case SET_LOADING:
             return { ...state, isLoading: cmd.isLoading }

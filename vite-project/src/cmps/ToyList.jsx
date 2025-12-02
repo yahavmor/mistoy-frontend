@@ -1,5 +1,5 @@
 import { utilService } from '../../services/util.service.js'
-import { ToyPreview } from "./ToyPreview.jsx"
+import { ToyPreview } from "../pages/ToyPreview.jsx"
 import { Link } from "react-router-dom"
 
 export function ToyList({ toys, onRemoveToy }) {
