@@ -14,7 +14,7 @@ export function ToyDetails() {
     const navigate = useNavigate()
     const [answer,setAnswer] = useState(null)
     const [question,setQuestion] = useState("")
-    
+
     useEffect(() => {
         setToy(toyId)
         .catch(err => {

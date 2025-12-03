@@ -13,6 +13,7 @@ export const toyService = {
     save,
     getDefaultFilter,
     getFilterFromSearchParams,
+    getEmptyToy
 }
 window.cs = toyService
 
@@ -98,6 +99,13 @@ function _createToy(name) {
     .slice(0, utilService.getRandomIntInclusive(1, 3))
     toy.inStock = utilService.getRandomIntInclusive(0, 1) ? true : false
     return toy
+}
+function getEmptyToy() {
+    return {
+        name: '',
+        price: 0,
+        inStock: false,
+    }
 }
 
 
