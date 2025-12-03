@@ -1,7 +1,7 @@
 import { toyService } from "../services/toy.service.js";
 
 
-import { SET_LOADING, store ,SET_TOYS,REMOVE_TOY } from "./store.js"
+import { SET_LOADING, store ,SET_TOYS,REMOVE_TOY ,SET_TOY , SET_CHAT} from "./store.js"
 
 export function loadToys(filterBy){
       store.dispatch({ type: SET_LOADING, isLoading: true })
@@ -13,9 +13,9 @@ export function loadToys(filterBy){
             })
             .finally(() => store.dispatch({ type: SET_LOADING, isLoading: false }))
 }
-export function removeToy(toy) {
-      return toyService.remove(toy._id)
-            .then(() => store.dispatch({ type: REMOVE_TOY, toyId: toy._id }))
+export function removeToy(toyId) {
+      return toyService.remove(toyId)
+            .then(() => store.dispatch({ type: REMOVE_TOY, toyId: toyId }))
             .catch(err => {
                 console.error('err:', err)
                 throw err
@@ -23,4 +23,18 @@ export function removeToy(toy) {
 }
 export function setLoading(isLoading) {
       return store.dispatch({ type: SET_LOADING, isLoading })     
+}
+export function setToy(toyId){
+      return toyService.get(toyId)
+          .then(toy => {
+              store.dispatch({ type: SET_TOY, toy })
+              return toy
+          })
+          .catch(err => {
+              console.error('err:', err)
+              throw err
+          })
+}
+export function setChat(isOpen){
+    return store.dispatch({ type: SET_CHAT, chat: isOpen })
 }

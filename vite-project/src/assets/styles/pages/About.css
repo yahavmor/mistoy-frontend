@@ -1,0 +1,32 @@
+/* About.css */
+.about {
+    max-width: 800px;
+    margin: 4rem auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+  }
+  
+  .about h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+  
+  .about p {
+    font-size: 1.1rem;
+    color: #555;
+    text-align: justify;
+  }
+  
+  .about:hover {
+    transform: translateY(-4px);
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+  }
+  

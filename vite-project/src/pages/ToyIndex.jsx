@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux'
-import { utilService } from '../../services/util.service.js'
 import { Footer } from "../cmps/Footer.jsx"
 import { ToyList } from '../cmps/ToyList.jsx'
-import {useEffect, useState} from 'react'
-import { loadToys } from '../../store/toy.actions.js'
+import {useEffect} from 'react'
+import { loadToys, removeToy } from '../../store/toy.actions.js'
+
 // const { Link, useSearchParams } = ReactRouterDOM
 // const { useSelector } = ReactRedux
 // const { useNavigate } = ReactRouter
@@ -33,7 +33,9 @@ export function ToyIndex() {
     }, [])
 
     function onRemoveToy(toyId) {
-        console.log('Removing toy', toyId)
+        removeToy(toyId)
+        .then(console.log('Removing toy', toyId))
+        
         // navigate(`/todo/${todoId}/remove`)
     }
 
@@ -48,6 +50,7 @@ export function ToyIndex() {
             {!isLoading && toys.length === 0 && <p>No toys found</p>}
             {isLoading?'Loading...':<ToyList toys={toys} onRemoveToy={onRemoveToy}/>}
             <hr />
+            
             <Footer />
         </section>
     )

@@ -1,0 +1,45 @@
+/* ToyPreview.css */
+.toy-preview {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .toy-preview:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+  
+  .toy-preview h4 {
+    font-size: 1.4rem;
+    margin: 0.5rem 0;
+    color: #2c3e50;
+  }
+  
+  /* optional image styling if you add toy images */
+  .toy-preview img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+  
+  /* optional button styling */
+  .toy-preview button {
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .toy-preview button:hover {
+    background: #c92c3a;
+  }
+  

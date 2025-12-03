@@ -5,7 +5,9 @@ export const utilService = {
     loadFromStorage,
     saveToStorage,
     animateCSS,
-    getRandomColor
+    getRandomColor,
+    timeAgo,
+    getRandAnswer
 }
 
 function makeId(length = 6) {
@@ -67,3 +69,37 @@ function getRandomColor() {
     }
     return color
 }
+function timeAgo(timestamp) {
+    const now = Date.now()
+    const diff = now - timestamp
+  
+    const seconds = Math.floor(diff / 1000)
+    const minutes = Math.floor(seconds / 60)
+    const hours = Math.floor(minutes / 60)
+    const days = Math.floor(hours / 24)
+  
+    if (days > 0) return `${days} day${days > 1 ? 's' : ''} ago`
+    if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''} ago`
+    if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''} ago`
+    return `${seconds} second${seconds > 1 ? 's' : ''} ago`
+}
+
+function getRandAnswer() {
+    const answers = [
+      "That's an interesting thought!",
+      "Can you tell me more about that?",
+      "I see what you mean.",
+      "Let me think about it for a moment...",
+      "That's a great question!",
+      "I’m not sure, but I’d love to explore it with you.",
+      "It depends — what do you think?",
+      "I can give you some ideas if you'd like.",
+      "That reminds me of something similar I’ve seen.",
+      "I’d be happy to explain further!"
+    ]
+  
+    const randomIndex = Math.floor(Math.random() * answers.length)
+    return answers[randomIndex]
+  }
+  
+  

@@ -1,0 +1,75 @@
+/* ToyIndex.css */
+.toy-index {
+    max-width: 1000px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: #fafafa;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .toy-index h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+    text-align: center;
+    border-bottom: 2px solid #e63946;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+  }
+  
+  .toy-index p {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #777;
+  }
+  
+  .toy-index hr {
+    margin: 2rem 0;
+    border: none;
+    border-top: 1px solid #ddd;
+  }
+  
+  /* ToyList styling (assuming ToyList renders a grid of toys) */
+  .toy-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .toy-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .toy-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+  
+  .toy-card h3 {
+    font-size: 1.3rem;
+    margin: 0.5rem 0;
+    color: #333;
+  }
+  
+  .toy-card button {
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .toy-card button:hover {
+    background: #c92c3a;
+  }
+  
