@@ -89,7 +89,7 @@ function _createToys() {
 function _createToy(name) {
     const toy = {}
     toy.name = name
-    toy.imgUrl = `https://picsum.photos/seed/${name}/200/200` 
+    toy.imgUrl = `https://robohash.org/${name}?size=200x200`
     toy._id = utilService.makeId()
     toy.createdAt = toy.updatedAt = Date.now() - utilService.getRandomIntInclusive(0, 1000 * 60 * 60 * 24)
     toy.price = utilService.getRandomIntInclusive(50, 400)

@@ -12,6 +12,8 @@
 @import "../styles/cmps/AppHeader.css";
 @import "../styles/cmps/ToyList.css";
 @import "../styles/cmps/Popup.css";
+@import "../styles/cmps/ToyPreview.css";
+
 
 
 
@@ -19,5 +21,4 @@
 @import "../styles/pages/Home.css";
 @import "../styles/pages/About.css";
 @import "../styles/pages/ToyIndex.css";
-@import "../styles/pages/ToyPreview.css";
 @import "../styles/pages/ToyDetails.css"

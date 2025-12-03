@@ -14,7 +14,7 @@ export function ToyDetails() {
     const navigate = useNavigate()
     const [answer,setAnswer] = useState(null)
     const [question,setQuestion] = useState("")
-
+    
     useEffect(() => {
         setToy(toyId)
         .catch(err => {
@@ -30,10 +30,10 @@ export function ToyDetails() {
         navigate('/toy')
     }
     function handleSend() {
+        if(!question) return
         setAnswer(utilService.getRandAnswer())
         setQuestion("")
-
-      }
+}
 
     if (!toy) return <div>Loading...</div>
     const inStock = toy.inStock? 'In stock': 'Sold out'
@@ -54,8 +54,11 @@ export function ToyDetails() {
                 placeholder="Write your question..."
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") handleSend()
+                }}
                 />
-                <button className="btn-send" onClick={handleSend}>Send</button>
+                <button className="btn-send" disabled={!question} onClick={handleSend}>Send</button>
                 {answer && <p>{answer}</p>}
             </Popup>
         </section>

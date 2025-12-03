@@ -11,7 +11,6 @@ export function Popup({ isOpen, onClose,children }) {
   }, [isOpen, onClose])
 
   if (!isOpen) return null
-
   return (
     <div className="popup-overlay" onClick={onClose}>
       <div className="popup-content" onClick={(e) => e.stopPropagation()}>
