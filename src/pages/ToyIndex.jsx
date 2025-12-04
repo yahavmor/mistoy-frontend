@@ -3,6 +3,9 @@ import { Footer } from "../cmps/Footer.jsx"
 import { ToyList } from '../cmps/ToyList.jsx'
 import {useEffect} from 'react'
 import { loadToys, removeToy } from '../../store/toy.actions.js'
+import { OnlineStatus } from '../cmps/OnlineStatus.jsx'
+
+
 
 // const { Link, useSearchParams } = ReactRouterDOM
 // const { useSelector } = ReactRedux
@@ -38,8 +41,7 @@ export function ToyIndex() {
         
         // navigate(`/todo/${todoId}/remove`)
     }
-
-
+    
     return (
         <section className="toy-index">
             {/* <TodoFilter filterBy={filterBy} onSetFilterBy={setFilterBy} />
@@ -52,6 +54,7 @@ export function ToyIndex() {
             <hr />
             
             <Footer />
+            <OnlineStatus/>
         </section>
     )
 }

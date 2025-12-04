@@ -2,12 +2,14 @@ import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { toyService } from "../../services/toy.service.js"
 import { useSelector} from "react-redux"
+import { UseConfirmTabClose } from "../cmps/UseConfirmTabClose.jsx"
 
 
 export function ToyEdit() {
   const { toyId } = useParams()
   const navigate = useNavigate()
   const [toyToEdit, setToyToEdit] = useState(null)
+  const setHasUnsavedChanges = UseConfirmTabClose()
 
   useEffect(() => {
     if (toyId) {
@@ -31,12 +33,16 @@ export function ToyEdit() {
         break
     }
     setToyToEdit(prevToy => ({ ...prevToy, [field]: value }))
+    setHasUnsavedChanges(true)
   }
 
   function onSaveToy(ev) {
     ev.preventDefault()
     toyService.save(toyToEdit)
-      .then(() => navigate('/toy'))
+      .then(() =>{
+        setHasUnsavedChanges(false)
+        navigate('/toy')
+      })
       .catch(err => console.log('err:', err))
   }
     function onBack() {
