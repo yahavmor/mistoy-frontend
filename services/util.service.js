@@ -7,7 +7,8 @@ export const utilService = {
     animateCSS,
     getRandomColor,
     timeAgo,
-    getRandAnswer
+    getRandAnswer,
+    getRandLabels
 }
 
 function makeId(length = 6) {
@@ -101,5 +102,11 @@ function getRandAnswer() {
     const randomIndex = Math.floor(Math.random() * answers.length)
     return answers[randomIndex]
   }
+  function getRandLabels(numberOfLabels) {
+    const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle', 'Outdoor', 'Battery Powered']
+    const shuffled = labels.sort(() => 0.5 - Math.random())
+    return shuffled.slice(0, numberOfLabels)
+  }
+
   
   

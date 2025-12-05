@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom"
 import { toyService } from "../../services/toy.service.js"
 import { useSelector} from "react-redux"
 import { UseConfirmTabClose } from "../cmps/UseConfirmTabClose.jsx"
+import {showErrorMsg, showSuccessMsg} from '../../services/event-bus.service.js'
+
 
 
 export function ToyEdit() {
@@ -41,9 +43,13 @@ export function ToyEdit() {
     toyService.save(toyToEdit)
       .then(() =>{
         setHasUnsavedChanges(false)
+        showSuccessMsg('Toy saved')
         navigate('/toy')
       })
-      .catch(err => console.log('err:', err))
+      .catch(err => {
+        console.log('err:', err)
+        showErrorMsg('Cannot save toy')
+      })
   }
     function onBack() {
         navigate('/toy')
@@ -51,11 +57,13 @@ export function ToyEdit() {
 
   if (!toyToEdit) return <div>Loading...</div>
 
-  const { name, price, inStock } = toyToEdit
+  const { name, price, inStock, imgUrl } = toyToEdit
 
   return (
     <section className="toy-edit">
       <form onSubmit={onSaveToy}>
+
+        <img className="toy-image" src={imgUrl} alt="image of the toy" /> 
         <label htmlFor="name">Name:</label>
         <input onChange={handleChange} value={name} type="text" name="name" id="name" />
 

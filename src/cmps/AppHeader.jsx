@@ -2,6 +2,8 @@ import { useState } from "react"
 import {Link, NavLink} from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'
 import { useSelector } from "react-redux"
+import { UserMsg } from "./UserMsg.jsx"
+
 
 
 
@@ -20,6 +22,7 @@ export function AppHeader() {
                 <NavLink to="/about" >About</NavLink>
                 <NavLink to="/toy" >Toys</NavLink>
             </nav>
+            <UserMsg />
         </section>
     </header>
     )

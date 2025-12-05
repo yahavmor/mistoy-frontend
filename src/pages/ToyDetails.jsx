@@ -5,6 +5,8 @@ import { toyService } from "../../services/toy.service.js"
 import { useSelector } from 'react-redux'
 import { utilService } from "../../services/util.service.js"
 import { Popup } from "../cmps/Popup.jsx"
+import {showErrorMsg, showSuccessMsg} from '../../services/event-bus.service.js'
+
 
 
 export function ToyDetails() {
@@ -17,10 +19,13 @@ export function ToyDetails() {
 
     useEffect(() => {
         setToy(toyId)
-        .catch(err => {
-            console.log('error is: ',err)
-        })
-        
+            .then(()=>{showSuccessMsg('Toy details loaded')}) 
+            .catch(err => {
+                console.log('error is: ',err)
+                showErrorMsg('Cannot load toy details')
+                navigate('/toy')
+            })
+            
     }, [])
     function handleChat(){
     setChat(!isChatOpen)

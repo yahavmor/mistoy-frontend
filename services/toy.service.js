@@ -15,28 +15,28 @@ export const toyService = {
     getFilterFromSearchParams,
     getEmptyToy
 }
-window.cs = toyService
-
 function query(filterBy = {}) {
     return storageService.query(TOY_KEY)
-        // .then(toys => {
-        //     if (filterBy.txt) {
-        //         const regExp = new RegExp(filterBy.txt, 'i')
-        //         todos = todos.filter(toy => regExp.test(toy.txt))
-        //     }
-        //     if (filterBy.importance) {
-        //         todos = todos.filter(todo => todo.importance >= filterBy.importance)
-        //     }
-        //     if (filterBy.state && filterBy.state !== 'all') {
-        //         if (filterBy.state === 'active') {
-        //             todos = todos.filter(todo => !todo.isDone)
-        //         } else if (filterBy.state === 'done') {
-        //             todos = todos.filter(todo => todo.isDone)
-        //         }
-        //     }
-        //     return todos
-        // })
+        .then(toys => {
+            if (filterBy.name) {
+                const regExp = new RegExp(filterBy.name, 'i')
+                toys = toys.filter(toy => regExp.test(toy.name))
+            }
+            if (filterBy.price) {
+                toys = toys.filter(toy => toy.price >= filterBy.price)
+            }
+            if (filterBy.inStock) {
+                toys = toys.filter(toy => toy.inStock)
+            }
+            if (filterBy.labels && filterBy.labels.length) {
+                toys = toys.filter(toy =>
+                    toy.labels.some(label => filterBy.labels.includes(label))
+                )
+            }
+            return toys
+        })
 }
+
 
 function get(toyId) {
     return storageService.get(TOY_KEY, toyId)
@@ -60,17 +60,26 @@ function save(toy) {
 
 
 function getDefaultFilter() {
-    return { txt: '', importance: 0 }
+    return { name: '', price: 0, labels: [],  inStock: false }
 }
 
 function getFilterFromSearchParams(searchParams) {
     const defaultFilter = getDefaultFilter()
     const filterBy = {}
     for (const field in defaultFilter) {
-        filterBy[field] = searchParams.get(field) || ''
+        if (field === 'labels') {
+            filterBy.labels = searchParams.getAll('labels') || []
+        } else if (field === 'price') {
+            filterBy.price = +searchParams.get(field) || 0
+        } else if (field === 'inStock') {
+            filterBy.inStock = searchParams.get(field) === true
+        } else {
+            filterBy[field] = searchParams.get(field) || ''
+        }
     }
     return filterBy
 }
+
 
 
 function _createToys() {
@@ -105,6 +114,10 @@ function getEmptyToy() {
         name: '',
         price: 0,
         inStock: false,
+        labels: utilService.getRandLabels(utilService.getRandomIntInclusive(1, 3)),
+        imgUrl: `https://robohash.org/${utilService.getRandAnswer()}?size=200x200`,
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
     }
 }
 
