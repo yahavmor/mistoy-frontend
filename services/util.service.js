@@ -8,7 +8,8 @@ export const utilService = {
     getRandomColor,
     timeAgo,
     getRandAnswer,
-    getRandLabels
+    getRandLabels,
+    debounce
 }
 
 function makeId(length = 6) {
@@ -107,6 +108,12 @@ function getRandAnswer() {
     const shuffled = labels.sort(() => 0.5 - Math.random())
     return shuffled.slice(0, numberOfLabels)
   }
-
+  function debounce(func, delay) {
+    let timer;
+    return (...args) =>{
+      if(timer) clearTimeout(timer); 
+      timer = setTimeout(()=>func(...args),delay)
+    };
+  }
   
   
