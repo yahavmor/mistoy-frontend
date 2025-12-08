@@ -1,7 +1,6 @@
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut, Line } from 'react-chartjs-2';
 
-
-import {Chart as ChartJS,ArcElement,Tooltip,Legend} from 'chart.js';
+import {Chart as ChartJS,ArcElement,Tooltip,Legend,LineElement,PointElement,CategoryScale,LinearScale,Filler} from 'chart.js';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { loadToys } from '../../store/toy.actions';
@@ -10,7 +9,7 @@ import { labels, toyService } from '../../services/toy.service';
 import { utilService } from '../../services/util.service';
 
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend, LineElement,PointElement,CategoryScale,LinearScale,Filler);
   
 export function Dashboard(){
     const toys = useSelector((state) => state.toys)
@@ -65,6 +64,22 @@ export function Dashboard(){
           },
         ],
     };
+
+    const lineData = {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Toy Sales',
+            data: totals, 
+            borderColor: utilService.getRandomColor(),
+            backgroundColor: 'transparent', 
+            tension: 0.4, 
+            fill: true,   
+          },
+        ],
+      }
+
+      
     
     return (
         <section className='dashboard'>
@@ -80,6 +95,11 @@ export function Dashboard(){
                         <Doughnut data={inventoryByLabel} />
                     </div>
             </div>
+            <div className='line-chart'>
+                <label>Price per label</label>
+                <Line data={lineData}></Line>
+            </div>
+            
         </section>
 
     ) 

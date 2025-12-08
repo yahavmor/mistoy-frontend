@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
+import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { toyService } from '../../services/toy.service';
+
 
 export function ToyFilter({ filterBy, onSetFilterBy }) {
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
+    const allLabels = toyService.labels
+
 
     useEffect(() => {
         onSetFilterBy(filterByToEdit)
@@ -79,23 +84,22 @@ export function ToyFilter({ filterBy, onSetFilterBy }) {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="labels">Labels</label>
-                    <select
-                        multiple
-                        name="labels"
-                        id="labels"
-                        value={labels}
-                        onChange={handleChange}
-                    >
-                        <option value="On wheels">On wheels</option>
-                        <option value="Box game">Box game</option>
-                        <option value="Art">Art</option>
-                        <option value="Baby">Baby</option>
-                        <option value="Doll">Doll</option>
-                        <option value="Puzzle">Puzzle</option>
-                        <option value="Outdoor">Outdoor</option>
-                        <option value="Battery Powered">Battery Powered</option>
-                    </select>
+                    <div className="select-multi">
+                        <label htmlFor="labels">Labels</label>
+                        <Select
+                            multiple
+                            name="labels"
+                            id="labels"
+                            value={labels}               
+                            onChange={handleChange}
+                            >
+                            {allLabels.map(label => (
+                                <MenuItem key={label} value={label}>
+                                {label}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </div>
                 </div>
                 <button className="btn btn-secondary">Apply</button>
                 <Link to="/toy/edit/" className="btn btn-primary"> Add Toy</Link>

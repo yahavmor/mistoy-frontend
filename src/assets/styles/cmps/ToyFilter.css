@@ -20,3 +20,8 @@
 .toy-filter__form select {
   min-width: 120px;
 }
+.select-multi {
+  width: 200px;
+  height: auto; 
+}
+

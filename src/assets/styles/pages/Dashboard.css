@@ -1,11 +1,14 @@
 .dashboard {
-    margin: 4rem auto;
-    padding: 2rem;
+    margin: 1em auto;
+    padding: 1rem;
     background: #ffffff;
     border-radius: 12px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
+    display: grid;
+    gap: 2em;
+    place-items: center;
 }
 .dashboard-header{
     text-align: center;
@@ -23,5 +26,12 @@
     margin: 1rem;
     display: grid;
     place-items: center;
-  }
+}
+
+.line-chart{
+    width: 800px;
+    height: 600px;
+    display: grid;
+    place-items: center;
+}
   
