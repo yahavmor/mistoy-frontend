@@ -2,7 +2,7 @@ import { utilService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 
 const TOY_KEY = 'toyDB'
-const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle',
+export const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle',
 'Outdoor', 'Battery Powered']
 _createToys()
 
@@ -13,7 +13,8 @@ export const toyService = {
     save,
     getDefaultFilter,
     getFilterFromSearchParams,
-    getEmptyToy
+    getEmptyToy,
+    labels
 }
 function query(filterBy = {}) {
     return storageService.query(TOY_KEY)

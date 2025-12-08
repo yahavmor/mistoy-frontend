@@ -1,8 +1,7 @@
-import { useState } from "react"
-import {Link, NavLink} from 'react-router-dom'
-import {useNavigate} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import { useSelector } from "react-redux"
 import { UserMsg } from "./UserMsg.jsx"
+import Button from '@mui/material/Button';
 
 
 
@@ -21,6 +20,10 @@ export function AppHeader() {
                 <NavLink to="/" >Home</NavLink>
                 <NavLink to="/about" >About</NavLink>
                 <NavLink to="/toy" >Toys</NavLink>
+                <NavLink to="/dashboard" >Dashboard</NavLink>
+                <Button variant="contained" color="primary" >
+                    Exapmle
+                </Button>
             </nav>
             <UserMsg />
         </section>
