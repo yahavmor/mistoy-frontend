@@ -22,6 +22,8 @@ export function ToyFilter({ filterBy, onSetFilterBy }) {
   const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy });
   const allLabels = toyService.labels;
 
+  
+
   useEffect(() => {
     onSetFilterBy(filterByToEdit);
   }, [filterByToEdit]);
