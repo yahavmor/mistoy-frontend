@@ -1,109 +1,133 @@
-import { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
-import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { toyService } from '../../services/toy.service';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { toyService } from "../../services/toy.service";
 
+import {
+  Box,
+  Card,
+  CardHeader,
+  CardContent,
+  TextField,
+  Checkbox,
+  FormControlLabel,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Button,
+  FormHelperText,
+} from "@mui/material";
 
 export function ToyFilter({ filterBy, onSetFilterBy }) {
-    const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
-    const allLabels = toyService.labels
+  const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy });
+  const allLabels = toyService.labels;
 
+  useEffect(() => {
+    onSetFilterBy(filterByToEdit);
+  }, [filterByToEdit]);
 
-    useEffect(() => {
-        onSetFilterBy(filterByToEdit)
-    }, [filterByToEdit])
+  function handleChange({ target }) {
+    const field = target.name;
+    let value = target.value;
 
-    function handleChange({ target }) {
-        const field = target.name
-        let value = target.value
-
-        switch (target.type) {
-            case 'number':
-            case 'range':
-                value = +value || ''
-                break
-            case 'checkbox':
-                value = target.checked
-                break
-            case 'select-multiple':
-                value = Array.from(target.selectedOptions, option => option.value)
-                break
-            default:
-                break
-        }
-
-        setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
+    switch (target.type) {
+      case "number":
+      case "range":
+        value = +value || "";
+        break;
+      case "checkbox":
+        value = target.checked;
+        break;
+      case "select-multiple":
+        value = Array.from(target.selectedOptions, (option) => option.value);
+        break;
+      default:
+        break;
     }
 
-    function onSubmitFilter(ev) {
-        ev.preventDefault()
-        onSetFilterBy(filterByToEdit)
-    }
+    setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }));
+  }
 
-    const { name, price, labels, inStock } = filterByToEdit
+  function onSubmitFilter(ev) {
+    ev.preventDefault();
+    onSetFilterBy(filterByToEdit);
+  }
 
-    return (
-        <section className="toy-filter card">
-            <header className="toy-filter__header">
-                <h2> Filter Toys</h2>
-            </header>
-            <form onSubmit={onSubmitFilter} className="toy-filter__form">
-                <div className="form-group">
-                    <label htmlFor="name">Name</label>
-                    <input
-                        value={name}
-                        onChange={handleChange}
-                        type="search"
-                        placeholder="Search by name..."
-                        id="name"
-                        name="name"
-                    />
-                </div>
+  const { name, price, labels, inStock } = filterByToEdit;
 
-                <div className="form-group">
-                    <label htmlFor="price">Price</label>
-                    <input
-                        value={price}
-                        onChange={handleChange}
-                        type="number"
-                        placeholder="Minimum price"
-                        id="price"
-                        name="price"
-                    />
-                </div>
-                    <div className="instock">
-                        <label htmlFor="inStock">In stock</label>
-                        <input
-                            type="checkbox"
-                            name="inStock"
-                            id="inStock"
-                            checked={inStock}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    
-                    <div className="select-multi">
-                        <label>Filter by Labels</label>
-                        <Select
-                            multiple
-                            name="labels"
-                            id="labels"
-                            value={labels}               
-                            onChange={handleChange}
-                            sx={{ width:'200px', height:'30px'}}
-                            >
-                            {allLabels.map(label => (
-                                <MenuItem key={label} value={label}>
-                                {label}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </div>
-                <button className="btn btn-secondary">Apply</button>
-                <Link to="/toy/edit/" className="btn btn-primary"> Add Toy</Link>
+  return (
+    <Card>
+      <CardHeader title="Filter Toys" />
+      <CardContent>
+        <Box
+          component="form"
+          onSubmit={onSubmitFilter}
+          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+        >
+          <TextField
+            label="Name"
+            variant="outlined"
+            type="search"
+            name="name"
+            value={name}
+            onChange={handleChange}
+            placeholder="Search by name..."
+          />
 
-            </form>
+          <TextField
+            label="Price"
+            variant="outlined"
+            type="number"
+            name="price"
+            value={price}
+            onChange={handleChange}
+            placeholder="Minimum price"
+          />
 
-        </section>
-    )
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={inStock}
+                onChange={handleChange}
+                name="inStock"
+              />
+            }
+            label="In stock"
+          />
+
+          <FormControl>
+            <InputLabel id="labels-select-label">Filter by Labels</InputLabel>
+            <Select
+              labelId="labels-select-label"
+              multiple
+              name="labels"
+              value={labels}
+              onChange={handleChange}
+            >
+              {allLabels.map((label) => (
+                <MenuItem key={label} value={label}>
+                  {label}
+                </MenuItem>
+              ))}
+            </Select>
+            <FormHelperText>Select one or more labels</FormHelperText>
+          </FormControl>
+
+          <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+            <Button type="submit" variant="outlined" color="secondary">
+              Apply
+            </Button>
+            <Button
+              component={Link}
+              to="/toy/edit/"
+              variant="contained"
+              color="primary"
+            >
+              Add Toy
+            </Button>
+          </Box>
+        </Box>
+      </CardContent>
+    </Card>
+  );
 }
