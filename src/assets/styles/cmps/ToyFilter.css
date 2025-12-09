@@ -20,8 +20,8 @@
 .toy-filter__form select {
   min-width: 120px;
 }
-.select-multi {
-  width: 200px;
-  height: auto; 
+.select-multi, .instock{
+  display: grid;
+  place-items: center;
 }
 

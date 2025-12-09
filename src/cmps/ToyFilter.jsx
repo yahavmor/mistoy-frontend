@@ -71,27 +71,26 @@ export function ToyFilter({ filterBy, onSetFilterBy }) {
                         name="price"
                     />
                 </div>
-
-                <div className="form-group checkbox-group">
-                    <label htmlFor="inStock">In stock</label>
-                    <input
-                        type="checkbox"
-                        name="inStock"
-                        id="inStock"
-                        checked={inStock}
-                        onChange={handleChange}
-                    />
-                </div>
-
-                <div className="form-group">
+                    <div className="instock">
+                        <label htmlFor="inStock">In stock</label>
+                        <input
+                            type="checkbox"
+                            name="inStock"
+                            id="inStock"
+                            checked={inStock}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    
                     <div className="select-multi">
-                        <label htmlFor="labels">Labels</label>
+                        <label>Filter by Labels</label>
                         <Select
                             multiple
                             name="labels"
                             id="labels"
                             value={labels}               
                             onChange={handleChange}
+                            sx={{ width:'200px', height:'30px'}}
                             >
                             {allLabels.map(label => (
                                 <MenuItem key={label} value={label}>
@@ -100,7 +99,6 @@ export function ToyFilter({ filterBy, onSetFilterBy }) {
                             ))}
                         </Select>
                     </div>
-                </div>
                 <button className="btn btn-secondary">Apply</button>
                 <Link to="/toy/edit/" className="btn btn-primary"> Add Toy</Link>
 

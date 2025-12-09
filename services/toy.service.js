@@ -100,7 +100,7 @@ function _createToys() {
 function _createToy(name) {
     const toy = {}
     toy.name = name
-    toy.imgUrl = `https://robohash.org/${name}?size=200x200`
+    toy.imgUrl = `https://robohash.org/${name}?size=200x200&set=set4`
     toy._id = utilService.makeId()
     toy.createdAt = toy.updatedAt = Date.now() - utilService.getRandomIntInclusive(0, 1000 * 60 * 60 * 24)
     toy.price = utilService.getRandomIntInclusive(50, 400)
@@ -116,7 +116,7 @@ function getEmptyToy() {
         price: 0,
         inStock: false,
         labels: utilService.getRandLabels(utilService.getRandomIntInclusive(1, 3)),
-        imgUrl: `https://robohash.org/${utilService.getRandAnswer()}?size=200x200`,
+        imgUrl: `https://robohash.org/${utilService.getRandAnswer()}?size=200x200&set=set4`,
         createdAt: Date.now(),
         updatedAt: Date.now(),
     }
