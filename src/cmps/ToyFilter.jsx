@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { toyService } from "../../services/toy.service";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 import {
   Box,
@@ -9,122 +9,117 @@ import {
   CardContent,
   TextField,
   Checkbox,
-  FormControlLabel,
-  FormControl,
-  InputLabel,
   Select,
   MenuItem,
   Button,
-  FormHelperText,
+  Chip,
 } from "@mui/material";
 
+import { toyService } from "../../services/toy.service";
+
 export function ToyFilter({ filterBy, onSetFilterBy }) {
-  const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy });
   const allLabels = toyService.labels;
 
+  const validationSchema = Yup.object({
+    name: Yup.string()
+      .min(2, "Name must be at least 2 characters")
+      .max(20, "Name must be under 20 characters"),
+    price: Yup.number()
+      .min(0, "Price cannot be negative")
+      .nullable(),
+    labels: Yup.array().of(Yup.string()),
+    inStock: Yup.boolean(),
+  });
+
   
-
-  useEffect(() => {
-    onSetFilterBy(filterByToEdit);
-  }, [filterByToEdit]);
-
-  function handleChange({ target }) {
-    const field = target.name;
-    let value = target.value;
-
-    switch (target.type) {
-      case "number":
-      case "range":
-        value = +value || "";
-        break;
-      case "checkbox":
-        value = target.checked;
-        break;
-      case "select-multiple":
-        value = Array.from(target.selectedOptions, (option) => option.value);
-        break;
-      default:
-        break;
-    }
-
-    setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }));
-  }
-
-  function onSubmitFilter(ev) {
-    ev.preventDefault();
-    onSetFilterBy(filterByToEdit);
-  }
-
-  const { name, price, labels, inStock } = filterByToEdit;
+  const formik = useFormik({
+    initialValues: {
+      name: filterBy.name || "",
+      price: filterBy.price || "",
+      labels: filterBy.labels || [],
+      inStock: filterBy.inStock || false,
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      onSetFilterBy(values); 
+    },
+  });
 
   return (
     <Card>
-      <CardHeader title="Filter Toys" />
+      <CardHeader title="Filter Toys" sx={{ textAlign: "center" }} />
+
       <CardContent>
         <Box
           component="form"
-          onSubmit={onSubmitFilter}
+          onSubmit={formik.handleSubmit}
           sx={{ display: "flex", flexDirection: "column", gap: 2 }}
         >
           <TextField
             label="Name"
-            variant="outlined"
-            type="search"
             name="name"
-            value={name}
-            onChange={handleChange}
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.name && Boolean(formik.errors.name)}
+            helperText={formik.touched.name && formik.errors.name}
             placeholder="Search by name..."
           />
 
           <TextField
             label="Price"
-            variant="outlined"
             type="number"
             name="price"
-            value={price}
-            onChange={handleChange}
+            value={formik.values.price}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.price && Boolean(formik.errors.price)}
+            helperText={formik.touched.price && formik.errors.price}
             placeholder="Minimum price"
           />
 
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={inStock}
-                onChange={handleChange}
-                name="inStock"
-              />
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Checkbox
+              name="inStock"
+              checked={formik.values.inStock}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            <span>In stock</span>
+          </Box>
+
+          <Select
+            multiple
+            name="labels"
+            value={formik.values.labels}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            displayEmpty
+            renderValue={(selected) =>
+              selected.length === 0 ? (
+                <span style={{ color: "#aaa" }}>Select labels</span>
+              ) : (
+                <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+                  {selected.map((label) => (
+                    <Chip key={label} label={label} />
+                  ))}
+                </Box>
+              )
             }
-            label="In stock"
-          />
+          >
+            {allLabels.map((label) => (
+              <MenuItem key={label} value={label}>
+                {label}
+              </MenuItem>
+            ))}
+          </Select>
 
-          <FormControl>
-            <InputLabel id="labels-select-label">Filter by Labels</InputLabel>
-            <Select
-              labelId="labels-select-label"
-              multiple
-              name="labels"
-              value={labels}
-              onChange={handleChange}
-            >
-              {allLabels.map((label) => (
-                <MenuItem key={label} value={label}>
-                  {label}
-                </MenuItem>
-              ))}
-            </Select>
-            <FormHelperText>Select one or more labels</FormHelperText>
-          </FormControl>
-
-          <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
-            <Button type="submit" variant="outlined" color="secondary">
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <Button type="submit" variant="outlined">
               Apply
             </Button>
-            <Button
-              component={Link}
-              to="/toy/edit/"
-              variant="contained"
-              color="primary"
-            >
+
+            <Button component={Link} to="/toy/edit/" variant="contained">
               Add Toy
             </Button>
           </Box>
