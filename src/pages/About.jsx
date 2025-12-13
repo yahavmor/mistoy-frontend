@@ -1,9 +1,37 @@
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { useEffect, useState } from "react";
+import { mapService } from "../../services/map.service.js";
+
+
 
 export function About() {
-    return (
-        <section className="about">
-            <h1>Toys</h1>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio dolore sapiente, iste animi corporis nisi atque tempora assumenda dolores. Nobis nam dolorem rerum illo facilis nemo sit voluptatibus laboriosam necessitatibus!</p>
-        </section>
-    )
+    const [branches,setBraches]=useState([])
+    const [center,setCenter]=useState({ lat: 32.0853, lng: 34.7818 })
+
+    useEffect(()=>{
+        setBraches(mapService.getBranches())
+    },[])
+  const containerStyle = {
+    width: "100%",
+    height: "700px",
+  };
+
+  function onSelectBranch(branch) {
+    setCenter({ lat: branch.lat, lng: branch.lng });
+}
+
+
+  return (
+    <section className="about">
+      <LoadScript googleMapsApiKey="AIzaSyDV32zrtz0rOxkzvuFRJJ1fDRknM5gqFMg">
+        <GoogleMap mapContainerStyle={containerStyle} zoom={12} center={center}>
+
+            {branches && branches.map((branch, idx) => (
+                <Marker key={idx} onClick={() => onSelectBranch(branch)} position={{ lat: branch.lat, lng: branch.lng }} />
+            ))}
+
+        </GoogleMap>
+      </LoadScript>
+    </section>
+  );
 }
