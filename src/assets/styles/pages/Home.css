@@ -1,31 +1,17 @@
-/* Home.css */
 .home {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-    font-family: 'Comic Neue', 'Segoe UI', sans-serif;
-    text-align: center;
-  }
-  
-  .home h1 {
-    font-size: 4rem;
-    font-weight: bold;
-    color: #e63946;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
-    margin: 0;
-    animation: bounce 2s infinite;
-  }
-  
-  /* playful bounce animation */
-  @keyframes bounce {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-12px);
-    }
-  }
-  
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.home-title {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.home-image {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
