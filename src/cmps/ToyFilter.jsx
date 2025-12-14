@@ -58,6 +58,7 @@ export function ToyFilter({ filterBy, onSetFilterBy }) {
           <TextField
             label="Name"
             name="name"
+            type="search"
             value={formik.values.name}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
