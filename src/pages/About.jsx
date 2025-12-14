@@ -23,13 +23,18 @@ export function About() {
 
   return (
     <section className="about">
+      <h1>Map of all Branches</h1>
       <LoadScript googleMapsApiKey="AIzaSyDV32zrtz0rOxkzvuFRJJ1fDRknM5gqFMg">
         <GoogleMap mapContainerStyle={containerStyle} zoom={12} center={center}>
 
             {branches && branches.map((branch, idx) => (
-                <Marker key={idx} onClick={() => onSelectBranch(branch)} position={{ lat: branch.lat, lng: branch.lng }} />
+            <Marker
+              key={idx}
+              position={{ lat: branch.lat, lng: branch.lng }}
+              onClick={() => onSelectBranch(branch)}
+              label={branch.name} 
+            />
             ))}
-
         </GoogleMap>
       </LoadScript>
     </section>
