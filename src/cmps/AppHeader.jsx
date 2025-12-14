@@ -12,9 +12,11 @@ export function AppHeader() {
     return (
         
     <header
-        className="app-header full main-layout"
-        >
+        className="app-header full main-layout">
         <section className="header-container">
+        <NavLink to="/toy">
+        <img src="logo.png" alt="Scary Toy Logo" className="logo" />
+        </NavLink>
             <nav className="app-nav">
                 <NavLink to="/" >Home</NavLink>
                 <NavLink to="/about" >About</NavLink>

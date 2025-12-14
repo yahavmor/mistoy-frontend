@@ -1,26 +1,26 @@
 .app-header {
-  background: linear-gradient(135deg, #4a90e2, #357ab8);
+  background: linear-gradient(135deg, #8b0000, #1a0000);
   color: #fff;
-  padding: 0.5rem 2rem;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
-
 .header-container {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
 }
+
 
 .app-nav {
   display: flex;
   gap: 1.5rem;
 }
 
+
 .app-nav a {
-  color: #fff;
   text-decoration: none;
   font-weight: 500;
   font-size: 1rem;
@@ -36,6 +36,18 @@
 .app-nav a:hover {
   color: #ffdd57;
 }
+.logo {
+  height: auto; 
+  width: 100px;
+  margin-right: 2rem;
+  transition: transform 0.3s ease;
+}
+
+
+.logo:hover {
+  transform: scale(1.1);
+}
+
 
 @media (max-width: 600px) {
   .header-container {
