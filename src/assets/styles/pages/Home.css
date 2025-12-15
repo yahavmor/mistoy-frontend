@@ -45,6 +45,39 @@
   transform: translate(-50%, -50%);
   animation: flash 1.3s infinite alternate;
 }
+.scary-btn {
+  background: linear-gradient(135deg, #2b0000, #5a0000);
+  color: #fff;
+  padding: 14px 28px;
+  font-size: 18px;
+  font-weight: bold;
+  border: 2px solid var(--clrdarkred);
+  border-radius: 8px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-shadow: 0 0 6px var(--clrbrightred);
+  box-shadow: 0 0 12px var(--clrdarkred), inset 0 0 8px var(--clrdarkred);
+  transition: all 0.25s ease;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.scary-btn:hover {
+  background: var(--bgcscarycolor);
+  box-shadow: 0 0 18px var(--clrbrightred), inset 0 0 10px var(--clrdarkred);
+  transform: scale(1.05) rotate(-1deg);
+}
+
+.scary-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 8px var(--clrbrightred) inset;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 10px var(--clrdarkred) }
+  50% { box-shadow: 0 0 20px var(--clrbrightred)}
+  100% { box-shadow: 0 0 10px var(--clrdarkred)}
+}
+
 
 
 @keyframes flash {

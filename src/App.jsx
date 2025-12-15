@@ -1,7 +1,9 @@
 import { RootCmp } from './RootCmp.jsx'
- 
-function App() {
-  return <RootCmp />
-}
+import { useEffect } from 'react'
 
+function App() {
+  return (
+    <RootCmp />
+  )
+}
 export default App
