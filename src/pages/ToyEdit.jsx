@@ -38,19 +38,24 @@ export function ToyEdit() {
     setHasUnsavedChanges(true)
   }
 
-  function onSaveToy(ev) {
+  async function onSaveToy(ev) {
     ev.preventDefault()
-    toyService.save(toyToEdit)
-      .then(() =>{
-        setHasUnsavedChanges(false)
-        showSuccessMsg('Toy saved')
-        navigate('/toy')
-      })
-      .catch(err => {
-        console.log('err:', err)
-        showErrorMsg('Cannot save toy')
-      })
+    console.log(toyToEdit)
+  
+    try {
+      const toy = await toyService.save(toyToEdit)
+  
+      setHasUnsavedChanges(false)
+      showSuccessMsg('Toy saved')
+      navigate('/toy')
+    } 
+    catch (err) {
+      console.log('err:', err)
+      showErrorMsg('Cannot save toy')
+    }
   }
+  
+
     function onBack() {
         navigate('/toy')
     }

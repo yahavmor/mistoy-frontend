@@ -16,27 +16,31 @@ export const toyService = {
     getEmptyToy,
     labels
 }
-function query(filterBy = {}) {
-    return storageService.query(TOY_KEY)
-        .then(toys => {
-            if (filterBy.name) {
-                const regExp = new RegExp(filterBy.name, 'i')
-                toys = toys.filter(toy => regExp.test(toy.name))
-            }
-            if (filterBy.price) {
-                toys = toys.filter(toy => toy.price >= filterBy.price)
-            }
-            if (filterBy.inStock) {
-                toys = toys.filter(toy => toy.inStock)
-            }
-            if (filterBy.labels && filterBy.labels.length) {
-                toys = toys.filter(toy =>
-                    toy.labels.some(label => filterBy.labels.includes(label))
-                )
-            }
-            return toys
-        })
-}
+async function query(filterBy = {}) {
+    let toys = await storageService.query(TOY_KEY)
+  
+    if (filterBy.name) {
+      const regExp = new RegExp(filterBy.name, 'i')
+      toys = toys.filter(toy => regExp.test(toy.name))
+    }
+  
+    if (filterBy.price) {
+      toys = toys.filter(toy => toy.price >= filterBy.price)
+    }
+  
+    if (filterBy.inStock) {
+      toys = toys.filter(toy => toy.inStock)
+    }
+  
+    if (filterBy.labels && filterBy.labels.length) {
+      toys = toys.filter(toy =>
+        toy.labels.some(label => filterBy.labels.includes(label))
+      )
+    }
+  
+    return toys
+  }
+  
 
 
 function get(toyId) {
@@ -124,7 +128,7 @@ function _createToys() {
 function _createToy(name) {
     const toy = {}
     toy.name = name
-    toy.imgUrl = `https://robohash.org/${name}?size=200x200&set=set2`
+    toy.imgUrl = `https://robohash.org/${utilService.makeId()}?size=200x200&set=set2`
     toy._id = utilService.makeId()
     toy.createdAt = toy.updatedAt = Date.now() - utilService.getRandomIntInclusive(0, 1000 * 60 * 60 * 24)
     toy.price = utilService.getRandomIntInclusive(50, 400)
@@ -135,15 +139,9 @@ function _createToy(name) {
     return toy
 }
 function getEmptyToy() {
-    return {
-        name: '',
-        price: 0,
-        inStock: false,
-        labels: utilService.getRandLabels(utilService.getRandomIntInclusive(1, 3)),
-        imgUrl: `https://robohash.org/${utilService.getRandAnswer()}?size=200x200&set=set4`,
-        createdAt: Date.now(),
-        updatedAt: Date.now(),
-    }
+    const newToy =  _createToy(name='Default name')
+    newToy._id = null
+    return newToy
 }
 
 
