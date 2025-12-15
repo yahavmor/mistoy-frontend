@@ -34,7 +34,7 @@
 }
 .nightmare-banner {
   position: absolute;
-  top: 50%;
+  bottom: 5%;
   left: 50%;
   font-size: 4rem;
   letter-spacing: 10px;

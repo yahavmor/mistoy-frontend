@@ -9,6 +9,8 @@ import { useSearchParams } from 'react-router-dom'
 import { toyService } from '../../services/toy.service.js'
 import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service.js'
 import { utilService } from '../../services/util.service.js'
+import { NoToys } from '../cmps/NoToys.jsx'
+
 
 export function ToyIndex() {
   const toys = useSelector((state) => state.toys)
@@ -45,7 +47,7 @@ export function ToyIndex() {
   return (
     <section className="toy-index">
       <ToyFilter filterBy={filterBy} onSetFilterBy={debounced} />
-      {!isLoading && toys.length === 0 && <p>No toys found</p>}
+      {!isLoading && toys.length === 0 && <NoToys/>}
       {isLoading ? 'Loading...' : <ToyList toys={toys} onRemoveToy={onRemoveToy} />}
       <hr />
       <Footer />

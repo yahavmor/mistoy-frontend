@@ -41,14 +41,14 @@ export function ToyDetails() {
 }
 
     if (!toy) return <div>Loading...</div>
-    const inStock = toy.inStock? 'In stock': 'Sold out'
+    const inStock = toy.inStock? 'in-stock': 'sold-out'
     const createdAt = utilService.timeAgo(toy.createdAt)
     return (
         <section className="toy-details">
             <h1 className="toy-name">Toy :{toy.name}</h1>
             <img className="toy-image" src={toy.imgUrl} alt="image of the toy" />
             <h2 className="toy-price">Price:{toy.price}</h2>
-            <h3 className="in-stock">{inStock}</h3>
+            <h3 className={inStock}>{inStock}</h3>
             <p className="created-at">This toy has been created at : {createdAt}</p>
             <img className="chat-icon" src="chat-icon.png" alt="chat icon"  onClick={handleChat}/>
             <button className="btn-back" onClick={onBack}>Back to list</button>
