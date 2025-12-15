@@ -10,8 +10,7 @@
 .home-title {
   font-size: 6rem;
   letter-spacing: 20px;
-  color: #ff4c4c;
-  display: inline-block;
+  color: var(--clrbrightred);
   transition: transform 0.4s ease;
 }
 
@@ -39,12 +38,12 @@
   left: 50%;
   font-size: 4rem;
   letter-spacing: 10px;
-  color: #ff0000;
-  text-shadow: 0 0 20px #ff0000;
+  color: var(--clrbrightred);
+  text-shadow: 0 0 20px var(--clrbrightred);
   font-weight: bold;
   text-align: center;
   transform: translate(-50%, -50%);
-  animation: flash 1s infinite alternate;
+  animation: flash 1.3s infinite alternate;
 }
 
 

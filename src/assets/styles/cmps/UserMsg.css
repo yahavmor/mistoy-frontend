@@ -1,5 +1,5 @@
 .user-msg {
-    background-color: lightgray;
+    background-color: var(--gray2);
     padding: .5em 1em;
     position: fixed;
     bottom: 1em;

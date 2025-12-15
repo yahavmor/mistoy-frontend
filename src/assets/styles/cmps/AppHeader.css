@@ -34,7 +34,7 @@
 }
 
 .app-nav a:hover {
-  color: #ffdd57;
+  color: var(--clrhoveryellow);
 }
 .logo {
   height: auto; 

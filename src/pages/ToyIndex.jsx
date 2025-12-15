@@ -45,7 +45,6 @@ export function ToyIndex() {
   return (
     <section className="toy-index">
       <ToyFilter filterBy={filterBy} onSetFilterBy={debounced} />
-      <h2>Toys List</h2>
       {!isLoading && toys.length === 0 && <p>No toys found</p>}
       {isLoading ? 'Loading...' : <ToyList toys={toys} onRemoveToy={onRemoveToy} />}
       <hr />

@@ -1,18 +1,16 @@
+
 .toy-list {
-  padding: 15px 0 0;
-  list-style: none;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 15px;
+  gap: 1.5rem;
 }
 
-/* Each toy card */
 .toy-list li {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  background: var(--bgcscarycolor);
   align-items: center;
-  background-color: var(--clr1bg); /* use your theme variable */
   border-radius: 8px;
   padding: 1rem;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
@@ -24,7 +22,6 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-/* Button section */
 .toy-list li section {
   text-align: center;
   margin-top: 0.75rem;
@@ -32,24 +29,4 @@
   gap: 0.5rem;
 }
 
-/* Buttons */
-.toy-list li section button {
-  background: #4a90e2;
-  border: none;
-  color: #fff;
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background 0.3s ease;
-}
 
-.toy-list li section button:hover {
-  background: #357ab8;
-}
-
-/* Links inside buttons */
-.toy-list li section button a {
-  color: inherit;
-  text-decoration: none;
-}

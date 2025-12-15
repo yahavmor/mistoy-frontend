@@ -1,19 +1,17 @@
-/* ToyDetails.css */
 .toy-details {
     max-width: 800px;
     margin: 3rem auto;
     padding: 2rem;
-    background: #ffffff;
+    background: white;
     border-radius: 12px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
   }
   
   .toy-name {
     font-size: 2.2rem;
     font-weight: bold;
-    color: #2c3e50;
+    color: var(--gray3);
     margin-bottom: 1rem;
   }
   
@@ -27,31 +25,31 @@
   
   .toy-price {
     font-size: 1.6rem;
-    color: #e63946;
+    color: var(--clrbrightred);
     margin: 0.5rem 0;
   }
   
   .in-stock {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #27ae60;
+    color: var(--clrinstock);
     margin-bottom: 1rem;
   }
   
   .in-stock.sold-out {
-    color: #c92c3a;
+    color: var(--clrbrightred);
   }
   
   .created-at {
     font-size: 0.95rem;
-    color: #777;
+    color: var(--gray2);
     margin-bottom: 1.5rem;
   }
   
   .btn-back {
     padding: 0.6rem 1.2rem;
-    background: #2c3e50;
-    color: #fff;
+    background: var(--gray3);
+    color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -59,12 +57,10 @@
     transition: background 0.3s ease;
   }
   
-  .btn-back:hover {
-    background: #1a252f;
-  }
 .chat-icon {
   width: 100px;
   position: fixed;
+  background-color: white;
   right: 10px;
   bottom: 10px;
   height: 100px;
@@ -78,5 +74,4 @@
 
 .chat-icon:hover {
   transform: scale(1.1);
-  background: #1a252f;
 }

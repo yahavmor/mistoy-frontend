@@ -11,4 +11,11 @@
   --gray2: rgb(155, 155, 155);
   --gray3: rgb(44, 44, 44);
 
+  --bgcscarycolor: linear-gradient(135deg, #8b0000, #1a0000);
+  --clrhoveryellow:  #ffdd57;
+  --clrbrightred:  #e63946;
+  --clrbtnnbluebright: hsl(212, 73%, 59%);
+  --clrbtnnbluedark: hsl(212, 73%, 39%);
+  --clrinstock: #27ae60;
+
 } 

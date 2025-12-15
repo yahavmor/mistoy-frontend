@@ -1,6 +1,5 @@
-/* ToyPreview.css */
 .toy-preview {
-    background: #fff;
+    background: white;
     border-radius: 12px;
     padding: 1.5rem;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -16,10 +15,9 @@
   .toy-preview h4 {
     font-size: 1.4rem;
     margin: 0.5rem 0;
-    color: #2c3e50;
+    color: var(--gray3);
   }
   
-  /* optional image styling if you add toy images */
   .toy-preview img {
     max-width: 100%;
     height: auto;
@@ -27,12 +25,10 @@
     margin-bottom: 1rem;
   }
   
-  /* optional button styling */
   .toy-preview button {
     margin-top: 0.5rem;
     padding: 0.5rem 1rem;
-    background: #e63946;
-    color: #fff;
+    color: var(--gray3);
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -40,6 +36,6 @@
   }
   
   .toy-preview button:hover {
-    background: #c92c3a;
+    background: var(--clrbrightred);
   }
   
