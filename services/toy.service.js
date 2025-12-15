@@ -87,9 +87,33 @@ function _createToys() {
     let toys = utilService.loadFromStorage(TOY_KEY)
     if (!toys || !toys.length) {
         toys = []
-        const names = ['Lily', 'Daisy', 'Rosie', 'Bella', 'Sophie', 'Mia', 'Zoey', 'Stella', 'Luna', 'Aurora']
+        const names = [
+            "Ravenclaw",
+            "Bloodfang",
+            "Nightshade",
+            "Grimhollow",
+            "Venomira",
+            "Skullcrusher",
+            "Hexbane",
+            "Cinderfiend",
+            "Rotfang",
+            "Phantomora",
+            "Ghoulspire",
+            "Dreadmire",
+            "Shadowfang",
+            "Cryptbane",
+            "Boneveil",
+            "Wraithclaw",
+            "Darkthorn",
+            "Soulreaper",
+            "Ashfang",
+            "Hollowfang"
+          ]
+            const available = [...names]
+
         for (let i = 0; i < 20; i++) {
-            const name = names[utilService.getRandomIntInclusive(0, names.length - 1)]
+            const idx = utilService.getRandomIntInclusive(0, available.length - 1)
+            const name = available.splice(idx, 1)[0]  
             toys.push(_createToy(name))
         }
         utilService.saveToStorage(TOY_KEY, toys)
@@ -100,7 +124,7 @@ function _createToys() {
 function _createToy(name) {
     const toy = {}
     toy.name = name
-    toy.imgUrl = `https://robohash.org/${name}?size=200x200&set=set4`
+    toy.imgUrl = `https://robohash.org/${name}?size=200x200&set=set2`
     toy._id = utilService.makeId()
     toy.createdAt = toy.updatedAt = Date.now() - utilService.getRandomIntInclusive(0, 1000 * 60 * 60 * 24)
     toy.price = utilService.getRandomIntInclusive(50, 400)

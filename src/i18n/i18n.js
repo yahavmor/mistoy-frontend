@@ -10,7 +10,7 @@ i18n
       en: { translation: en },
       he: { translation: he }
     },
-    lng: "en", // שפה ברירת מחדל
+    lng: "en", 
     fallbackLng: "en",
     interpolation: { escapeValue: false }
   });
