@@ -1,7 +1,11 @@
 export function Footer() {
     return (
-        <footer className="app-footer">
-            <p>© 2024 My Toy App. All rights reserved.</p>
-        </footer>
+      <footer className="app-footer">
+        <div className="footer-content">
+          <p className="footer-title">My Toy App</p>
+          <p className="footer-copy">© 2024 All rights reserved.</p>
+        </div>
+      </footer>
     )
-}
+  }
+  

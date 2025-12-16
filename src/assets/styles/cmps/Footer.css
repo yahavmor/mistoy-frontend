@@ -1,0 +1,29 @@
+.app-footer {
+    background: #111;
+    color: var(--clr1bg-light);
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 40px;
+    border-top: 2px solid var(--grey3);
+}
+
+.footer-content {
+display: flex;
+flex-direction: column;
+gap: 4px;
+}
+
+.footer-title {
+font-size: 20px;
+font-weight: bold;
+letter-spacing: 1px;
+color: var(--clrbrightred);
+text-shadow: 0 0 6px var(--clrbrightred);
+}
+
+.footer-copy {
+font-size: 14px;
+opacity: 0.7;
+}
+
+  

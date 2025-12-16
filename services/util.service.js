@@ -37,7 +37,7 @@ function makeLorem(size = 100) {
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min)
     max = Math.floor(max)
-    return Math.floor(Math.random() * (max - min + 1)) + min //The maximum is inclusive and the minimum is inclusive 
+    return Math.floor(Math.random() * (max - min + 1)) + min 
 }
 
 function saveToStorage(key, value) {
@@ -97,7 +97,37 @@ function getRandAnswer() {
       "It depends — what do you think?",
       "I can give you some ideas if you'd like.",
       "That reminds me of something similar I’ve seen.",
-      "I’d be happy to explain further!"
+      "I’d be happy to explain further!",
+      "That's a fascinating angle!",
+      "I hadn’t thought of it that way before.",
+      "What made you think of that?",
+      "I’m curious where you're going with this.",
+      "That’s a really thoughtful point.",
+      "Let’s dig into that together.",
+      "I like the way you're approaching this.",
+      "There’s definitely something interesting there.",
+      "I can see why you'd say that.",
+      "That opens up a lot of possibilities.",
+      "I’d love to hear your reasoning.",
+      "That’s a clever observation.",
+      "You’re bringing up something important.",
+      "Let’s explore that idea a bit more.",
+      "I appreciate the way you’re thinking about this.",
+      "That could lead us somewhere really cool.",
+      "You’re onto something intriguing.",
+      "That’s a perspective worth considering.",
+      "I’m following — keep going.",
+      "That’s a solid point to start from.",
+      "I can help you break that down if you want.",
+      "Interesting — what made you think of that?",
+      "There’s more to unpack there for sure.",
+      "I like where this conversation is heading.",
+      "That’s a unique way to look at it.",
+      "You’re raising a great question.",
+      "Let’s take a closer look at that.",
+      "I’m excited to explore that with you.",
+      "That’s definitely worth thinking about.",
+      "I’m here if you want to dive deeper."
     ]
   
     const randomIndex = Math.floor(Math.random() * answers.length)
