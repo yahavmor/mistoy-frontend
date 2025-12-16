@@ -49,8 +49,6 @@ export function ToyIndex() {
       <ToyFilter filterBy={filterBy} onSetFilterBy={debounced} />
       {!isLoading && toys.length === 0 && <NoToys/>}
       {isLoading ? 'Loading...' : <ToyList toys={toys} onRemoveToy={onRemoveToy} />}
-      <hr />
-      <Footer />
       <OnlineStatus />
     </section>
   )
