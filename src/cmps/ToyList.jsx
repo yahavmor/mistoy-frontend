@@ -1,4 +1,3 @@
-import { utilService } from '../../services/util.service.js'
 import { ToyPreview } from "../cmps/ToyPreview.jsx"
 import { Link } from "react-router-dom"
 

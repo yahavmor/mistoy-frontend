@@ -1,41 +1,85 @@
 .toy-preview {
-    background: white;
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    text-align: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  
-  .toy-preview:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-  }
-  
-  .toy-preview h4 {
-    font-size: 1.4rem;
-    margin: 0.5rem 0;
-    color: var(--gray3);
-  }
-  
-  .toy-preview img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-  }
-  
-  .toy-preview button {
-    margin-top: 0.5rem;
-    padding: 0.5rem 1rem;
-    color: var(--gray3);
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  .toy-preview button:hover {
-    background: var(--clrbrightred);
-  }
-  
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.toy-preview:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.toy-preview h4 {
+  font-size: 1.4rem;
+  margin: 0.5rem 0;
+  color: var(--gray3);
+}
+
+.toy-preview img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.toy-preview button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  color: var(--gray3);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.toy-preview button:hover {
+  background: var(--clrbrightred);
+}
+.toy-labels {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.toy-labels p {
+  background: var(--gray3);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.toy-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--clrbrightred);
+  margin-bottom: 1rem;
+}
+
+.toy-image {
+  max-width: 300px;
+  height: auto;
+  border-radius: 12px;
+  margin: 1rem 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.toy-price {
+  font-size: 1.6rem;
+  margin: 0.5rem 0;
+}
+
+.in-stock {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--clrinstock);
+  margin-bottom: 1rem;
+}
+
+.sold-out {
+  color: var(--clrbrightred);
+}

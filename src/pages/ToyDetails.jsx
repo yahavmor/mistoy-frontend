@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import { utilService } from "../../services/util.service.js"
 import { Popup } from "../cmps/Popup.jsx"
 import {showErrorMsg, showSuccessMsg} from '../../services/event-bus.service.js'
+import { ToyPreview } from "../cmps/ToyPreview.jsx"
 
 
 
@@ -45,13 +46,10 @@ export function ToyDetails() {
     const createdAt = utilService.timeAgo(toy.createdAt)
     return (
         <section className="toy-details">
-            <h1 className="toy-name">Toy :{toy.name}</h1>
-            <img className="toy-image" src={toy.imgUrl} alt="image of the toy" />
-            <h2 className="toy-price">Price:{toy.price}</h2>
-            <h3 className={inStock}>{inStock}</h3>
+            <ToyPreview toy={toy}/>
             <p className="created-at">This toy has been created at : {createdAt}</p>
-            <img className="chat-icon" src="chat-icon.png" alt="chat icon"  onClick={handleChat}/>
             <button className="btn-back" onClick={onBack}>Back to list</button>
+
             <Popup isOpen={isChatOpen} onClose={handleChat}>
                 <h2>Chat with us</h2>
                 <input
@@ -66,6 +64,8 @@ export function ToyDetails() {
                 <button className="btn-send" disabled={!question} onClick={handleSend}>Send</button>
                 {answer && <p>{answer}</p>}
             </Popup>
+            <img className="chat-icon" src="chat-icon.png" alt="chat icon"  onClick={handleChat}/>
+
         </section>
     )
 }

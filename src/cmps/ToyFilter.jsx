@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { toyService } from "../../services/toy.service";
+
 
 import {
   Box,
@@ -15,7 +17,6 @@ import {
   Chip,
 } from "@mui/material";
 
-import { toyService } from "../../services/toy.service";
 
 export function ToyFilter({ filterBy, onSetFilterBy }) {
   const allLabels = toyService.labels;
@@ -25,8 +26,7 @@ export function ToyFilter({ filterBy, onSetFilterBy }) {
       .min(2, "Name must be at least 2 characters")
       .max(20, "Name must be under 20 characters"),
     price: Yup.number()
-      .min(0, "Price cannot be negative")
-      .nullable(),
+      .min(0, "Price cannot be negative"),
     labels: Yup.array().of(Yup.string()),
     inStock: Yup.boolean(),
   });
