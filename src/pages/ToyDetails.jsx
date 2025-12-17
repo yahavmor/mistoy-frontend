@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
-import {useNavigate, Link, useParams} from 'react-router-dom'
+import {useNavigate,useParams} from 'react-router-dom'
 import { setToy, setChat } from '../../store/toy.actions.js'
-import { toyService } from "../../services/toy.service.js"
 import { useSelector } from 'react-redux'
 import { utilService } from "../../services/util.service.js"
 import { Popup } from "../cmps/Popup.jsx"
@@ -19,15 +18,18 @@ export function ToyDetails() {
     const [question,setQuestion] = useState("")
 
     useEffect(() => {
-        setToy(toyId)
-            .then(()=>{showSuccessMsg('Toy details loaded')}) 
-            .catch(err => {
-                console.log('error is: ',err)
-                showErrorMsg('Cannot load toy details')
-                navigate('/toy')
-            })
-            
-    }, [])
+        async function loadToy() {
+        try {
+        await setToy(toyId) 
+        showSuccessMsg('Toy details loaded')
+        } catch (err) {
+        console.log('error is:', err)
+        showErrorMsg('Cannot load toy details')
+        navigate('/toy')
+    }}
+        loadToy()
+        }, [])
+    
     function handleChat(){
     setChat(!isChatOpen)
     }

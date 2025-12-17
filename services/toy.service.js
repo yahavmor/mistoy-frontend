@@ -1,6 +1,7 @@
 import { utilService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 
+
 const TOY_KEY = 'toyDB'
 export const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle',
 'Outdoor', 'Battery Powered']
@@ -128,8 +129,8 @@ function _createToys() {
 function _createToy(name) {
     const toy = {}
     toy.name = name
-    toy.imgUrl = `https://robohash.org/${utilService.makeId()}?size=200x200&set=set2`
-    toy._id = utilService.makeId()
+    toy.imgUrl = `https://robohash.org/${storageService._makeId()}?size=200x200&set=set2`
+    toy._id = storageService._makeId()
     toy.createdAt = toy.updatedAt = Date.now() - utilService.getRandomIntInclusive(0, 1000 * 60 * 60 * 24)
     toy.price = utilService.getRandomIntInclusive(50, 400)
     toy.labels = [...labels]

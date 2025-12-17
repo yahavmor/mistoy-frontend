@@ -1,6 +1,5 @@
 
 import {createStore} from 'redux';
-import { removeToy } from './toy.actions';
 
 
 export const SET_TOYS = 'SET_TOYS';

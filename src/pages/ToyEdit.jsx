@@ -14,13 +14,21 @@ export function ToyEdit() {
   const setHasUnsavedChanges = UseConfirmTabClose()
 
   useEffect(() => {
-    if (toyId) {
-      toyService.get(toyId)
-      .then(setToyToEdit)
-    } else {
-      setToyToEdit(toyService.getEmptyToy())
+    async function loadToy() {
+      if (toyId) {
+        try {
+          const toy = await toyService.get(toyId)
+          setToyToEdit(toy)
+        } catch (err) {
+          console.log('Error loading toy:', err)
+        }
+      } else {
+        setToyToEdit(toyService.getEmptyToy())
+      }
     }
+    loadToy()
   }, [toyId])
+  
 
   function handleChange({ target }) {
     const field = target.name
@@ -39,12 +47,9 @@ export function ToyEdit() {
   }
 
   async function onSaveToy(ev) {
-    ev.preventDefault()
-    console.log(toyToEdit)
-  
+    ev.preventDefault()  
     try {
       const toy = await toyService.save(toyToEdit)
-  
       setHasUnsavedChanges(false)
       showSuccessMsg('Toy saved')
       navigate('/toy')
@@ -55,7 +60,6 @@ export function ToyEdit() {
     }
   }
   
-
     function onBack() {
         navigate('/toy')
     }

@@ -1,6 +1,5 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { toyService } from '../services/toy.service.js'
 import '../src/assets/styles/main.css'
 import App from './App.jsx'
 import "./i18n/i18n.js"; 

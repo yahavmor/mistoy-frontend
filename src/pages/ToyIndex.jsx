@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux'
-import { Footer } from "../cmps/Footer.jsx"
 import { ToyList } from '../cmps/ToyList.jsx'
 import { useEffect, useRef, useState } from 'react'
 import { loadToys, removeToy } from '../../store/toy.actions.js'
@@ -20,22 +19,33 @@ export function ToyIndex() {
   const isLoading = useSelector((state) => state.isLoading)
 
   useEffect(() => {
-    setSearchParams(filterBy)
-    loadToys(filterBy)
-      .then(() => { showSuccessMsg('Toys loaded') })
-      .catch(err => {
-        showErrorMsg('Cannot load toys')
+    async function load() {
+      try {
+        setSearchParams(filterBy)
+        await loadToys(filterBy)
+        showSuccessMsg('Toys loaded')
+      } catch (err) {
         console.log('Cannot load toys', err)
-      })
+        showErrorMsg('Cannot load toys')
+      }
+    }
+  
+    load()
   }, [filterBy])
+  
 
   function onRemoveToy(toyId) {
-    removeToy(toyId)
-      .then(() => console.log('Removing toy', toyId))
-      .catch(err => {
+    async function remove(){
+      try{
+        await removeToy(toyId)
+        showSuccessMsg('Toy removed')
+      }
+      catch{
         showErrorMsg('Cannot remove toy')
         console.log('Cannot remove toy', err)
-      })
+      }
+    }
+    remove()
   }
 
   function onSetFilterBy(newFilter) {
