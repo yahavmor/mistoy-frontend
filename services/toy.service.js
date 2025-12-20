@@ -5,7 +5,6 @@ import { storageService } from './async-storage.service.js'
 const TOY_KEY = 'toyDB'
 export const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle',
 'Outdoor', 'Battery Powered']
-_createToys()
 
 export const toyService = {
     query,
@@ -17,51 +16,48 @@ export const toyService = {
     getEmptyToy,
     labels
 }
-async function query(filterBy = {}) {
-    let toys = await storageService.query(TOY_KEY)
-  
-    if (filterBy.name) {
-      const regExp = new RegExp(filterBy.name, 'i')
-      toys = toys.filter(toy => regExp.test(toy.name))
-    }
-  
-    if (filterBy.price) {
-      toys = toys.filter(toy => toy.price >= filterBy.price)
-    }
-  
-    if (filterBy.inStock) {
-      toys = toys.filter(toy => toy.inStock)
-    }
-  
-    if (filterBy.labels && filterBy.labels.length) {
-      toys = toys.filter(toy =>
-        toy.labels.some(label => filterBy.labels.includes(label))
-      )
-    }
-  
-    return toys
-  }
-  
+export async function query(filterBy = {}) {
+    const queryParams = new URLSearchParams()
 
+    if (filterBy.txt) queryParams.set('txt', filterBy.txt)
 
-function get(toyId) {
-    return storageService.get(TOY_KEY, toyId)
+    const res = await fetch(`/api/toy?${queryParams.toString()}`)
+    if (!res.ok) throw new Error('Failed to fetch toys')
+
+    return res.json()
 }
 
-function remove(toyId) {
-    return storageService.remove(TOY_KEY, toyId)
+  
+
+
+async function get(toyId) {
+    const res = await fetch(`/api/toy/${toyId}`)
+    if (!res.ok) throw new Error('Failed to get toy')
+    return res.json()
 }
 
-function save(toy) {
-    if (toy._id) {
-        toy.updatedAt = Date.now()
-        return storageService.put(TOY_KEY, toy)
-    } else {
-        toy.createdAt = toy.updatedAt = Date.now()
 
-        return storageService.post(TOY_KEY, toy)
-    }
+async function remove(toyId) {
+    const res = await fetch(`/api/toy/${toyId}`, { method: 'DELETE' })
+    if (!res.ok) throw new Error('Failed to remove toy')
+    return res.text()
 }
+
+
+async function save(toy) {
+    const method = toy._id ? 'PUT' : 'POST'
+    const url = toy._id ? `/api/toy/${toy._id}` : `/api/toy`
+
+    const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(toy)
+    })
+
+    if (!res.ok) throw new Error('Failed to save toy')
+    return res.json()
+}
+
 
 
 
@@ -86,59 +82,6 @@ function getFilterFromSearchParams(searchParams) {
     return filterBy
 }
 
-
-
-function _createToys() {
-    let toys = utilService.loadFromStorage(TOY_KEY)
-    if (!toys || !toys.length) {
-        toys = []
-        const names = [
-            "Ravenclaw",
-            "Bloodfang",
-            "Nightshade",
-            "Grimhollow",
-            "Venomira",
-            "Skullcrusher",
-            "Hexbane",
-            "Cinderfiend",
-            "Rotfang",
-            "Phantomora",
-            "Ghoulspire",
-            "Dreadmire",
-            "Shadowfang",
-            "Cryptbane",
-            "Boneveil",
-            "Wraithclaw",
-            "Darkthorn",
-            "Soulreaper",
-            "Ashfang",
-            "Hollowfang"
-          ]
-            const available = [...names]
-
-        for (let i = 0; i < 20; i++) {
-            const idx = utilService.getRandomIntInclusive(0, available.length - 1)
-            const name = available.splice(idx, 1)[0]  
-            toys.push(_createToy(name))
-        }
-        utilService.saveToStorage(TOY_KEY, toys)
-    }
-}
-
-
-function _createToy(name) {
-    const toy = {}
-    toy.name = name
-    toy.imgUrl = `https://robohash.org/${storageService._makeId()}?size=200x200&set=set2`
-    toy._id = storageService._makeId()
-    toy.createdAt = toy.updatedAt = Date.now() - utilService.getRandomIntInclusive(0, 1000 * 60 * 60 * 24)
-    toy.price = utilService.getRandomIntInclusive(50, 400)
-    toy.labels = [...labels]
-    .sort(() => Math.random() - 0.5)
-    .slice(0, utilService.getRandomIntInclusive(1, 3))
-    toy.inStock = utilService.getRandomIntInclusive(0, 1) ? true : false
-    return toy
-}
 function getEmptyToy() {
     const newToy =  _createToy(name='Default name')
     newToy._id = null

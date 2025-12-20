@@ -3,14 +3,9 @@ import { useSelector } from "react-redux"
 import { UserMsg } from "./UserMsg.jsx"
 
 
-
-
-
 export function AppHeader() {
     const toys = useSelector((state) => state.toys)
-
-    return (
-        
+    return ( 
     <header
         className="app-header full main-layout">
         <section className="header-container">
@@ -22,6 +17,8 @@ export function AppHeader() {
                 <NavLink to="/about" >About</NavLink>
                 <NavLink to="/toy" >Toys</NavLink>
                 <NavLink to="/dashboard" >Dashboard</NavLink>
+                <NavLink to="/auth" >Login/Sign-up</NavLink>
+
             </nav>
             <UserMsg />
         </section>

@@ -1,4 +1,3 @@
-import React from 'react'
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
@@ -10,6 +9,7 @@ import { store } from '../store/store.js'
 import { ToyDetails } from './pages/ToyDetails.jsx'
 import { ToyEdit } from './pages/ToyEdit.jsx'
 import { Dashboard } from './pages/Dashboard.jsx'
+import {LoginSignUp} from './pages/LoginSignUp.jsx'
 
 
 
@@ -31,6 +31,8 @@ export function RootCmp() {
                             <Route path="/toy/edit/:toyId" element={<ToyEdit/>} />
                             <Route path="/toy/edit/" element={<ToyEdit/>} />
                             <Route path="/toy/:toyId" element={<ToyDetails/>} />
+                            <Route path="/auth" element={<LoginSignUp/>} />
+
 
                         </Routes>
                     </main>
