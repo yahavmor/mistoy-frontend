@@ -1,27 +1,48 @@
-import {NavLink} from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import { useSelector } from "react-redux"
 import { UserMsg } from "./UserMsg.jsx"
-
+import { authService } from "../../services/auth.service.js"
+import { showSuccessMsg } from "../../services/event-bus.service.js"
+import { setUser } from '../../store/toy.actions.js'
 
 export function AppHeader() {
-    const toys = useSelector((state) => state.toys)
-    return ( 
-    <header
-        className="app-header full main-layout">
-        <section className="header-container">
-        <NavLink to="/toy">
-        <img src="logo.png" alt="Scary Toy Logo" className="logo" />
-        </NavLink>
-            <nav className="app-nav">
-                <NavLink to="/" >Home</NavLink>
-                <NavLink to="/about" >About</NavLink>
-                <NavLink to="/toy" >Toys</NavLink>
-                <NavLink to="/dashboard" >Dashboard</NavLink>
-                <NavLink to="/auth" >Login/Sign-up</NavLink>
 
-            </nav>
-            <UserMsg />
-        </section>
-    </header>
+    const loggedinUser = useSelector((state) => state.user)
+
+    function onLogout() {
+        authService.logout()
+        setUser(null)
+        showSuccessMsg('Logged out successfully')
+    }
+
+    return (
+        <header className="app-header full main-layout">
+            <section className="header-container">
+
+                <NavLink to="/toy">
+                    <img src="logo.png" alt="Scary Toy Logo" className="logo" />
+                </NavLink>
+
+                <nav className="app-nav">
+                    <NavLink to="/">Home</NavLink>
+                    <NavLink to="/about">About</NavLink>
+                    <NavLink to="/toy">Toys</NavLink>
+                    <NavLink to="/dashboard">Dashboard</NavLink>
+
+                    {!loggedinUser ? (
+                        <NavLink to="/auth">Login / Sign-up</NavLink>
+                    ) : (
+                        <div className="user">
+                            <Link to={`/user/${loggedinUser._id}`}>
+                                {loggedinUser.fullname}
+                            </Link>
+                            <button onClick={onLogout}>Logout</button>
+                        </div>
+                    )}
+                </nav>
+
+                <UserMsg />
+            </section>
+        </header>
     )
 }

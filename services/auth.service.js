@@ -1,7 +1,11 @@
 import axios from 'axios'
 
-const STORAGE_KEY_LOGGEDIN_USER = 'loggedInUser'
-const BASE_URL = '/api/auth/'
+const STORAGE_KEY = 'loggedInUser'
+
+const api = axios.create({
+  baseURL: '/api/auth/',
+  withCredentials: true, // allow cookies (sessions)
+})
 
 export const authService = {
   login,
@@ -10,43 +14,46 @@ export const authService = {
   getLoggedinUser,
 }
 
-async function login({ username, password }) {
+async function login(credentials) {
   try {
-    const { data: user } = await axios.post(BASE_URL + 'login', { username, password })
-    return _setLoggedinUser(user)
+    const { data: user } = await api.post('login', credentials)
+    return _saveUser(user)
   } catch (err) {
-    console.error('Login failed:', err)
+    console.error('Login failed:', err.response?.data || err)
     throw err
   }
 }
 
-async function signup({ username, password, fullname }) {
+async function signup(credentials) {
   try {
-    const { data: user } = await axios.post(BASE_URL + 'signup', { username, password, fullname })
-    return _setLoggedinUser(user)
+    const { data: user } = await api.post('signup', credentials)
+    return _saveUser(user)
   } catch (err) {
-    console.error('Signup failed:', err)
+    console.error('Signup failed:', err.response?.data || err)
     throw err
   }
 }
 
 async function logout() {
   try {
-    await axios.post(BASE_URL + 'logout')
-    sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
+    await api.post('logout')
+    sessionStorage.removeItem(STORAGE_KEY)
   } catch (err) {
-    console.error('Logout failed:', err)
+    console.error('Logout failed:', err.response?.data || err)
     throw err
   }
 }
 
 function getLoggedinUser() {
-  return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
+  return JSON.parse(sessionStorage.getItem(STORAGE_KEY))
 }
 
-function _setLoggedinUser(user) {
-  const { _id, fullname, isAdmin } = user
-  const userToSave = { _id, fullname, isAdmin }
-  sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(userToSave))
-  return userToSave
+function _saveUser(user) {
+  const userToStore = {
+    _id: user._id,
+    fullname: user.fullname,
+    isAdmin: user.isAdmin,
+  }
+  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(userToStore))
+  return userToStore
 }

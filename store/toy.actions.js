@@ -1,7 +1,7 @@
 import { toyService } from "../services/toy.service.js";
 
 
-import { SET_LOADING, store ,SET_TOYS,REMOVE_TOY ,SET_TOY , SET_CHAT} from "./store.js"
+import { SET_LOADING, store ,SET_TOYS,REMOVE_TOY ,SET_TOY , SET_CHAT, SET_USER,IS_SIGNUP} from "./store.js"
 
 export async function loadToys(filterBy) {
     store.dispatch({ type: SET_LOADING, isLoading: true })
@@ -41,4 +41,10 @@ export async function setToy(toyId){
 }
 export function setChat(isOpen){
     return store.dispatch({ type: SET_CHAT, chat: isOpen })
+}
+export function setUser(user) {
+    return store.dispatch({ type: SET_USER, user })
+}
+export function setIsSignUp(isSignUp) {
+  return store.dispatch({ type: IS_SIGNUP, isSignUp })
 }

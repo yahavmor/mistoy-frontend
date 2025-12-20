@@ -8,12 +8,16 @@ export const ADD_TOY = 'ADD_TOY';
 export const SET_LOADING = 'SET_LOADING';
 export const SET_TOY = 'SET_TOY'
 export const SET_CHAT = 'SET_CHAT'
+export const SET_USER = 'SET_USER'
+export const IS_SIGNUP = 'IS_SIGNUP'
 
 const initialState = {
     toys: [],
     isLoading: false,
     toy: null,
-    chat: false
+    chat: false,
+    user: null,
+    isSignUp: false,  
 };
 
 
@@ -32,6 +36,10 @@ function appReducer(state = initialState, cmd = {}) {
             return { ...state, isLoading: cmd.isLoading }
         case SET_CHAT:
             return { ...state, chat: cmd.chat}    
+        case SET_USER:
+            return { ...state, user: cmd.user }
+        case IS_SIGNUP:
+            return { ...state, isSignUp: cmd.isSignUp }
         default:
             return state;
     }
