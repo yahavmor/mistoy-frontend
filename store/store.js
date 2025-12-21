@@ -10,13 +10,14 @@ export const SET_TOY = 'SET_TOY'
 export const SET_CHAT = 'SET_CHAT'
 export const SET_USER = 'SET_USER'
 export const IS_SIGNUP = 'IS_SIGNUP'
+const savedUser = JSON.parse(sessionStorage.getItem('loggedinUser'))
 
 const initialState = {
     toys: [],
     isLoading: false,
     toy: null,
     chat: false,
-    user: null,
+    user: savedUser ? savedUser : null,
     isSignUp: false,  
 };
 
@@ -37,7 +38,13 @@ function appReducer(state = initialState, cmd = {}) {
         case SET_CHAT:
             return { ...state, chat: cmd.chat}    
         case SET_USER:
+            if (cmd.user) {
+                sessionStorage.setItem('loggedinUser', JSON.stringify(cmd.user))
+            } else {
+                sessionStorage.removeItem('loggedinUser')
+            }
             return { ...state, user: cmd.user }
+
         case IS_SIGNUP:
             return { ...state, isSignUp: cmd.isSignUp }
         default:

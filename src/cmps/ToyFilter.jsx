@@ -124,7 +124,7 @@ export function ToyFilter({ filterBy, onSetFilterBy }) {
               Apply
             </Button>
 
-            {loggedinUser.isAdmin&&<Button component={Link} to="/toy/edit/" variant="contained">
+            {loggedinUser?.isAdmin && <Button component={Link} to="/toy/edit/" variant="contained">
               Add Toy
             </Button>}
           </Box>

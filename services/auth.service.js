@@ -50,9 +50,9 @@ function getLoggedinUser() {
 
 function _saveUser(user) {
   const userToStore = {
-    _id: user._id,
-    fullname: user.fullname,
-    isAdmin: user.isAdmin,
+    _id: user._id ,
+    fullname: user.fullname || 'Anonymous',
+    isAdmin: user.isAdmin || false,
   }
   sessionStorage.setItem(STORAGE_KEY, JSON.stringify(userToStore))
   return userToStore

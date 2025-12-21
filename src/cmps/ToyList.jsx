@@ -12,12 +12,12 @@ export function ToyList({ toys, onRemoveToy }) {
                 <li key={toy._id}>
                     <ToyPreview toy={toy} />
                     <section>
-                        {loggedinUser.isAdmin&&<button onClick={() => onRemoveToy(toy._id)}>Remove</button>}
+                        {loggedinUser?.isAdmin && <button onClick={() => onRemoveToy(toy._id)}>Remove</button>}
                         <button>
                             <Link to={`/toy/${toy._id}`}>Details</Link>
                         </button>
                         <button>
-                        {loggedinUser.isAdmin&&<Link to={`/toy/edit/${toy._id}`}>Edit</Link>}
+                        {loggedinUser?.isAdmin && <Link to={`/toy/edit/${toy._id}`}>Edit</Link>}
                         </button>
                     </section>
                 </li>

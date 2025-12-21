@@ -14,7 +14,9 @@ export const toyService = {
     getDefaultFilter,
     getFilterFromSearchParams,
     getEmptyToy,
-    labels
+    labels,
+    _createToys,
+    _createToy
 }
 export async function query(filterBy = {}) {
     const queryParams = new URLSearchParams()
@@ -88,4 +90,54 @@ function getEmptyToy() {
     return newToy
 }
 
+function _createToys() {
+    let toys = utilService.loadFromStorage(TOY_KEY)
+    if (!toys || !toys.length) {
+        toys = []
+        const names = [
+            "Ravenclaw",
+            "Bloodfang",
+            "Nightshade",
+            "Grimhollow",
+            "Venomira",
+            "Skullcrusher",
+            "Hexbane",
+            "Cinderfiend",
+            "Rotfang",
+            "Phantomora",
+            "Ghoulspire",
+            "Dreadmire",
+            "Shadowfang",
+            "Cryptbane",
+            "Boneveil",
+            "Wraithclaw",
+            "Darkthorn",
+            "Soulreaper",
+            "Ashfang",
+            "Hollowfang"
+          ]
+            const available = [...names]
 
+        for (let i = 0; i < 20; i++) {
+            const idx = utilService.getRandomIntInclusive(0, available.length - 1)
+            const name = available.splice(idx, 1)[0]  
+            toys.push(_createToy(name))
+        }
+        utilService.saveToStorage(TOY_KEY, toys)
+    }
+}
+
+
+function _createToy(name) {
+    const toy = {}
+    toy.name = name
+    toy.imgUrl = `https://robohash.org/${storageService._makeId()}?size=200x200&set=set2`
+    toy._id = storageService._makeId()
+    toy.createdAt = toy.updatedAt = Date.now() - utilService.getRandomIntInclusive(0, 1000 * 60 * 60 * 24)
+    toy.price = utilService.getRandomIntInclusive(50, 400)
+    toy.labels = [...labels]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, utilService.getRandomIntInclusive(1, 3))
+    toy.inStock = utilService.getRandomIntInclusive(0, 1) ? true : false
+    return toy
+}
