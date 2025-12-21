@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toyService } from "../../services/toy.service";
+import { useSelector } from 'react-redux'
+
 
 
 import {
@@ -20,6 +22,8 @@ import {
 
 export function ToyFilter({ filterBy, onSetFilterBy }) {
   const allLabels = toyService.labels;
+  const loggedinUser = useSelector((state) => state.user)
+
 
   const validationSchema = Yup.object({
     name: Yup.string()
@@ -120,9 +124,9 @@ export function ToyFilter({ filterBy, onSetFilterBy }) {
               Apply
             </Button>
 
-            <Button component={Link} to="/toy/edit/" variant="contained">
+            {loggedinUser.isAdmin&&<Button component={Link} to="/toy/edit/" variant="contained">
               Add Toy
-            </Button>
+            </Button>}
           </Box>
         </Box>
       </CardContent>
