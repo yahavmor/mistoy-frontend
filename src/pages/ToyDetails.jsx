@@ -15,7 +15,6 @@ import { toyService } from "../../services/toy.service.js"
 export function ToyDetails() {
     const toy = useSelector((state) => state.toy)    
     const isChatOpen = useSelector((state) => state.chat)
-    const isSignUp = useSelector((state) => state.isSignUp)
     const loggedinUser = useSelector((state) => state.user)
     const {toyId} = useParams()
     const navigate = useNavigate()
@@ -92,7 +91,7 @@ function onDeleteReview(msgId) {
         <section className="toy-details">
             <ToyPreview toy={toy}/>
 
-            {isSignUp && <div className="message-box">
+            {loggedinUser && <div className="message-box">
                 <label className="message-label">Add Message:</label>
 
                 <div className="message-input-row">

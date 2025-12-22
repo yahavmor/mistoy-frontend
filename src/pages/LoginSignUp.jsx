@@ -13,6 +13,7 @@ export function LoginSignUp() {
   const [credentials, setCredentials] = useState(userService.getEmptyCredentials())
   const navigate = useNavigate()
 
+
   function handleChange({ target }) {
     const { name, value } = target
     setCredentials(prev => ({ ...prev, [name]: value }))
