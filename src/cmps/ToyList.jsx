@@ -16,9 +16,7 @@ export function ToyList({ toys, onRemoveToy }) {
                         <button>
                             <Link to={`/toy/${toy._id}`}>Details</Link>
                         </button>
-                        <button>
-                        {loggedinUser?.isAdmin && <Link to={`/toy/edit/${toy._id}`}>Edit</Link>}
-                        </button>
+                        {loggedinUser?.isAdmin && (<Link to={`/toy/edit/${toy._id}`}><button>Edit</button></Link>)}
                     </section>
                 </li>
             )}
