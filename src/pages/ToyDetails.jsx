@@ -15,6 +15,8 @@ import { toyService } from "../../services/toy.service.js"
 export function ToyDetails() {
     const toy = useSelector((state) => state.toy)    
     const isChatOpen = useSelector((state) => state.chat)
+    const isSignUp = useSelector((state) => state.isSignUp)
+    const loggedinUser = useSelector((state) => state.user)
     const {toyId} = useParams()
     const navigate = useNavigate()
     const [answer,setAnswer] = useState(null)
@@ -25,9 +27,9 @@ export function ToyDetails() {
     useEffect(() => {
     async function loadToy() {
         try {
-            const loadedToy = await toyService.get(toyId)   // <-- fetch from backend
+            const loadedToy = await toyService.get(toyId)   
             setToy(loadedToy._id)
-            setToyMessages(loadedToy.msgs || [])            // <-- load messages
+            setToyMessages(loadedToy.msgs || [])            
             showSuccessMsg('Toy details loaded')
         } catch (err) {
             console.log('error is:', err)
@@ -90,7 +92,7 @@ function onDeleteReview(msgId) {
         <section className="toy-details">
             <ToyPreview toy={toy}/>
 
-            <div className="message-box">
+            {isSignUp && <div className="message-box">
                 <label className="message-label">Add Message:</label>
 
                 <div className="message-input-row">
@@ -107,7 +109,7 @@ function onDeleteReview(msgId) {
                     </button>
                 </div>
             </div>
-
+}
             <div className="messages-container">
                 <h3 className="messages-title">Messages</h3>
 
@@ -125,12 +127,12 @@ function onDeleteReview(msgId) {
                                 <p className="message-text">{msg.txt}</p>
                             </div>
 
-                            <button
+                            {loggedinUser?.isAdmin &&<button
                                 className="delete-btn"
                                 onClick={() => onDeleteReview(msg.id)}
                             >
                                 Delete
-                            </button>
+                            </button>}
                         </li>
                     ))}
                 </ul>
