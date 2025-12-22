@@ -6,6 +6,9 @@ import { utilService } from "../../services/util.service.js"
 import { Popup } from "../cmps/Popup.jsx"
 import {showErrorMsg, showSuccessMsg} from '../../services/event-bus.service.js'
 import { ToyPreview } from "../cmps/ToyPreview.jsx"
+import { toyService } from "../../services/toy.service.js"
+
+
 
 
 
@@ -16,19 +19,25 @@ export function ToyDetails() {
     const navigate = useNavigate()
     const [answer,setAnswer] = useState(null)
     const [question,setQuestion] = useState("")
+    const [message, setMessage] = useState("")
+    const [toyMessages, setToyMessages] = useState([])
 
     useEffect(() => {
-        async function loadToy() {
+    async function loadToy() {
         try {
-        await setToy(toyId) 
-        showSuccessMsg('Toy details loaded')
+            const loadedToy = await toyService.get(toyId)   // <-- fetch from backend
+            setToy(loadedToy._id)
+            setToyMessages(loadedToy.msgs || [])            // <-- load messages
+            showSuccessMsg('Toy details loaded')
         } catch (err) {
-        console.log('error is:', err)
-        showErrorMsg('Cannot load toy details')
-        navigate('/toy')
-    }}
-        loadToy()
-        }, [])
+            console.log('error is:', err)
+            showErrorMsg('Cannot load toy details')
+            navigate('/toy')
+        }
+    }
+    loadToy()
+}, [])
+
     
     function handleChat(){
     setChat(!isChatOpen)
@@ -43,13 +52,89 @@ export function ToyDetails() {
         setQuestion("")
 }
 
+async function onSendMessage() {
+    if (!message) return
+
+    try {
+        const savedMsg = await toyService.sendMessage(toyId, message)
+        setToyMessages(prev => [...prev, savedMsg])
+        showSuccessMsg('Your message has been sent!')
+    } catch (err) {
+        console.log('Cannot send message', err)
+        showErrorMsg('Cannot send message')
+    }
+
+    setMessage("")
+}
+
+
+function onDeleteReview(msgId) {
+    async function deleteReview() {
+        try {
+            await toyService.deleteMessage(toyId, msgId)
+            setToyMessages(prevMessages => prevMessages.filter(msg => msg.id !== msgId))
+            showSuccessMsg('Message deleted successfully!')
+        }
+        catch(err){
+            console.log('Cannot delete message', err)
+            showErrorMsg('Cannot delete message')
+        }
+    }
+    deleteReview()
+}
+
     if (!toy) return <div>Loading...</div>
     const inStock = toy.inStock? 'in-stock': 'sold-out'
     const createdAt = utilService.timeAgo(toy.createdAt)
     return (
         <section className="toy-details">
             <ToyPreview toy={toy}/>
-            <p className="created-at">This toy has been created at : {createdAt}</p>
+
+            <div className="message-box">
+                <label className="message-label">Add Message:</label>
+
+                <div className="message-input-row">
+                    <input
+                        type="text"
+                        className="message-input"
+                        onChange={(e) => setMessage(e.target.value)}
+                        placeholder="Write a message..."
+                        value={message}
+                    />
+
+                    <button className="send-btn" onClick={onSendMessage}>
+                        Send
+                    </button>
+                </div>
+            </div>
+
+            <div className="messages-container">
+                <h3 className="messages-title">Messages</h3>
+
+                {toyMessages.length === 0 && (
+                    <p className="no-messages">No messages yet.</p>
+                )}
+
+                <ul className="messages-list">
+                    {toyMessages.map(msg => (
+                        <li key={msg.id} className="message-item">
+                            <div className="message-content">
+                                <span className="message-date">
+                                    {new Date(msg.createdAt).toLocaleString()}
+                                </span>
+                                <p className="message-text">{msg.txt}</p>
+                            </div>
+
+                            <button
+                                className="delete-btn"
+                                onClick={() => onDeleteReview(msg.id)}
+                            >
+                                Delete
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
             <button className="btn-back" onClick={onBack}>Back to list</button>
 
             <Popup isOpen={isChatOpen} onClose={handleChat}>

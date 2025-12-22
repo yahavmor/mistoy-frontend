@@ -42,3 +42,129 @@
 .chat-icon:hover {
   transform: scale(1.1);
 }
+
+.messages-container {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: var(--gray1);
+    border-radius: 12px;
+    border: 1px solid var(--gray2);
+}
+
+.messages-title {
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--gray3);
+}
+
+.no-messages {
+    color: var(--gray2);
+    font-style: italic;
+}
+
+.messages-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.message-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid var(--gray1);
+    transition: box-shadow 0.2s ease;
+}
+
+.message-item:hover {
+    box-shadow: 0 2px 8px var(--gray3);
+}
+
+.message-content {
+    max-width: 80%;
+}
+
+.message-date {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--gray2);
+    margin-bottom: 0.3rem;
+}
+
+.message-text {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--gray3);
+}
+
+.delete-btn {
+    background: var(--clrbrightred);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.2s ease;
+}
+
+.delete-btn:hover {
+    background: var(--clrbrightred);
+}
+.message-box {
+    margin-top: 1.5rem;
+    padding: 1.2rem;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid var(--gray2);
+}
+
+.message-label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    color: var(--gray3);
+}
+
+.message-input-row {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+}
+
+.message-input {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.message-input:focus {
+    border-color: var(--clrbtnnbluebright);
+    box-shadow: 0 0 0 3px var(--clrbtnnbluedark);
+    outline: none;
+}
+
+.send-btn {
+    padding: 0.7rem 1.2rem;
+    background: var(--clrbtnnbluebright);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.send-btn:hover {
+    background: var(--clrbtnnbluebright);
+}
+

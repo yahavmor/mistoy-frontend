@@ -16,7 +16,9 @@ export const toyService = {
     getEmptyToy,
     labels,
     _createToys,
-    _createToy
+    _createToy,
+    sendMessage,
+    deleteMessage
 }
 export async function query(filterBy = {}) {
     const queryParams = new URLSearchParams()
@@ -25,9 +27,17 @@ export async function query(filterBy = {}) {
 
     const res = await fetch(`/api/toy?${queryParams.toString()}`)
     if (!res.ok) throw new Error('Failed to fetch toys')
-
     return res.json()
 }
+
+async function deleteMessage(toyId, messageId) {
+  const res = await fetch(`/api/toy/${toyId}/msg/${messageId}`, {
+    method: 'DELETE'
+  });
+  if (!res.ok) throw new Error('Failed to delete message'); 
+  return await res.text();
+}
+
 
   
 
@@ -59,6 +69,17 @@ async function save(toy) {
     if (!res.ok) throw new Error('Failed to save toy')
     return res.json()
 }
+async function sendMessage(toyId, txt) {
+  const res = await fetch(`/api/toy/${toyId}/msg`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ txt })
+  });
+
+  if (!res.ok) throw new Error('Failed to send message');
+  return await res.json(); 
+}
+
 
 
 

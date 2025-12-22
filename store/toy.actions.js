@@ -26,6 +26,7 @@ export async function removeToy(toyId) {
         throw err
     }
 }
+
 export function setLoading(isLoading) {
       return store.dispatch({ type: SET_LOADING, isLoading })     
 }
