@@ -6,7 +6,7 @@ export function MusicButton() {
 
   const toggleMusic = () => {
     if (!audioRef.current) {
-      audioRef.current = new Audio("scary background music.mp3")
+      audioRef.current = new Audio("/scary background music.mp3")
       audioRef.current.loop = true
     }
 
@@ -26,15 +26,13 @@ export function MusicButton() {
   )
 }
 
-
-
 export function Home() {
   return (
     <section className="home">
       <h1 className="home-title">Toys R Us!</h1>
-      <MusicButton/>
+      <MusicButton />
       <div className="home-cover"></div>
       <div className="nightmare-banner">BEGIN YOUR NIGHTMARE</div>
     </section>
-  );
+  )
 }
