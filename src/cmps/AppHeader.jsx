@@ -19,7 +19,7 @@ export function AppHeader() {
         <header className="app-header full main-layout">
             <section className="header-container">
 
-                <NavLink to="/toy">
+                <NavLink to="/">
                     <img src="logo.png" alt="Scary Toy Logo" className="logo" />
                 </NavLink>
 
