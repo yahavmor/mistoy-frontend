@@ -10,6 +10,7 @@ import { ToyDetails } from './pages/ToyDetails.jsx'
 import { ToyEdit } from './pages/ToyEdit.jsx'
 import { Dashboard } from './pages/Dashboard.jsx'
 import {LoginSignUp} from './pages/LoginSignUp.jsx'
+import {UserDetails} from './pages/UserDetails.jsx'
 
 
 
@@ -32,6 +33,8 @@ export function RootCmp() {
                             <Route path="/toy/edit/" element={<ToyEdit/>} />
                             <Route path="/toy/:toyId" element={<ToyDetails/>} />
                             <Route path="/auth" element={<LoginSignUp/>} />
+                            <Route path="/user/:userId" element={<UserDetails/>} />
+
 
 
                         </Routes>

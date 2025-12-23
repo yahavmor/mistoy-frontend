@@ -7,6 +7,8 @@ import { Popup } from "../cmps/Popup.jsx"
 import {showErrorMsg, showSuccessMsg} from '../../services/event-bus.service.js'
 import { ToyPreview } from "../cmps/ToyPreview.jsx"
 import { toyService } from "../../services/toy.service.js"
+import { MessageList } from "../cmps/MessageList.jsx"
+
 
 
 
@@ -108,34 +110,12 @@ function onDeleteReview(msgId) {
                     </button>
                 </div>
             </div>
-}
-            <div className="messages-container">
-                <h3 className="messages-title">Messages</h3>
+            }    
+            <MessageList toyMessages={toyMessages} 
+            onDeleteReview={onDeleteReview} 
+            loggedinUser={loggedinUser}
+            />
 
-                {toyMessages.length === 0 && (
-                    <p className="no-messages">No messages yet.</p>
-                )}
-
-                <ul className="messages-list">
-                    {toyMessages.map(msg => (
-                        <li key={msg.id} className="message-item">
-                            <div className="message-content">
-                                <span className="message-date">
-                                    {new Date(msg.createdAt).toLocaleString()}
-                                </span>
-                                <p className="message-text">{msg.txt}</p>
-                            </div>
-
-                            {loggedinUser?.isAdmin &&<button
-                                className="delete-btn"
-                                onClick={() => onDeleteReview(msg.id)}
-                            >
-                                Delete
-                            </button>}
-                        </li>
-                    ))}
-                </ul>
-            </div>
             <button className="btn-back" onClick={onBack}>Back to list</button>
 
             <Popup isOpen={isChatOpen} onClose={handleChat}>
