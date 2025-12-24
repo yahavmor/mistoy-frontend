@@ -10,9 +10,10 @@ export function About() {
     setBranches(mapService.getBranches());
   }, []);
 
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyDV32zrtz0rOxkzvuFRJJ1fDRknM5gqFMg",
-  });
+const { isLoaded } = useJsApiLoader({
+  googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+});
+
 
   const containerStyle = {
     width: "100%",
