@@ -29,4 +29,5 @@
 @import "../styles/pages/ToyDetails.css";
 @import "../styles/pages/ToyEdit.css";
 @import "../styles/pages/Dashboard.css";
-@import "../styles/pages/LoginSignUp.css"
+@import "../styles/pages/LoginSignUp.css";
+@import "../styles/pages/UserDetails.css";

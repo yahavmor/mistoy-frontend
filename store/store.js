@@ -10,6 +10,10 @@ export const SET_TOY = 'SET_TOY'
 export const SET_CHAT = 'SET_CHAT'
 export const SET_USER = 'SET_USER'
 export const IS_SIGNUP = 'IS_SIGNUP'
+export const SET_REVIEWS = 'SET_REVIEWS'
+export const ADD_REVIEW = 'ADD_REVIEW'
+export const REMOVE_REVIEW = 'REMOVE_REVIEW'
+
 const savedUser = JSON.parse(sessionStorage.getItem('loggedinUser'))
 
 const initialState = {
@@ -19,6 +23,7 @@ const initialState = {
     chat: false,
     user: savedUser ? savedUser : null,
     isSignUp: false,  
+    reviews: []
 };
 
 
@@ -44,9 +49,14 @@ function appReducer(state = initialState, cmd = {}) {
                 sessionStorage.removeItem('loggedinUser')
             }
             return { ...state, user: cmd.user }
-
         case IS_SIGNUP:
             return { ...state, isSignUp: cmd.isSignUp }
+        case SET_REVIEWS:
+            return { ...state, reviews: cmd.reviews }
+        case ADD_REVIEW:
+            return { ...state, reviews: [...state.reviews, cmd.review] }
+        case REMOVE_REVIEW:
+            return { ...state, reviews: state.reviews.filter(review => review._id !== cmd.reviewId) }
         default:
             return state;
     }

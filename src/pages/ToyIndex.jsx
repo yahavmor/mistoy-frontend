@@ -18,20 +18,19 @@ export function ToyIndex() {
   const [filterBy, setFilterBy] = useState(defaultFilter)
   const isLoading = useSelector((state) => state.isLoading)
 
-  useEffect(() => {
-    async function load() {
-      try {
-        setSearchParams(filterBy)
-        await loadToys(filterBy)
-        showSuccessMsg('Toys loaded')
-      } catch (err) {
-        console.log('Cannot load toys', err)
-        showErrorMsg('Cannot load toys')
-      }
-    }
-  
-    load()
-  }, [filterBy])
+useEffect(() => {
+  loadToys(filterBy)
+    .then(() => showSuccessMsg('Toys loaded'))
+    .catch(err => {
+      console.log('Cannot load toys', err)
+      showErrorMsg('Cannot load toys')
+    })
+}, [filterBy])
+
+useEffect(() => {
+  setSearchParams(filterBy)
+}, [filterBy])
+
   
 
   function onRemoveToy(toyId) {

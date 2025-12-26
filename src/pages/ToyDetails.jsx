@@ -3,29 +3,30 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 import { toyService } from "../../services/toy.service.js"
-import { reviewService } from "../../services/review.service.js"
-
 import { setToy } from "../../store/toy.actions.js"
+
+import { loadReviews, addReview, removeReview } from "../../store/review.actions.js"
+
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service.js"
 
 import { ToyPreview } from "../cmps/ToyPreview.jsx"
 import { MessageList } from "../cmps/MessageList.jsx"
 
-
 export function ToyDetails() {
 
     const toy = useSelector(state => state.toy)
     const loggedinUser = useSelector(state => state.user)
+    const reviews = useSelector(state => state.reviews)   
 
     const { toyId } = useParams()
     const navigate = useNavigate()
 
     const [text, setText] = useState("")        
     const [toyMessages, setToyMessages] = useState([])
-    const [reviews, setReviews] = useState([])
 
     useEffect(() => {
         loadToy()
+        loadReviews({ toyId })   
     }, [toyId])
 
     async function loadToy() {
@@ -35,9 +36,6 @@ export function ToyDetails() {
 
             setToyMessages(loadedToy.msgs || [])
 
-            const toyReviews = await reviewService.query({ toyId })
-            setReviews(toyReviews)
-
             showSuccessMsg("Toy details loaded")
         } catch (err) {
             console.log("Cannot load toy", err)
@@ -46,20 +44,28 @@ export function ToyDetails() {
         }
     }
 
-
-
     async function onSend() {
         if (!text) return
-
         try {
-            const savedMsg = await toyService.sendMessage(toyId, text)
-            setToyMessages(prev => [...prev, savedMsg])
-
-            await reviewService.add({
+            const savedReview = await addReview({
                 txt: text,
                 toyId,
                 userId: loggedinUser._id
             })
+            
+
+            const savedMsg = await toyService.sendMessage(toyId, {
+                txt: text,
+                reviewId: savedReview._id
+            })
+            
+
+            savedMsg.reviewId = savedReview._id
+
+
+
+            setToyMessages(prev => [...prev, savedMsg])
+            
 
             showSuccessMsg("Message added!")
         } catch (err) {
@@ -70,10 +76,12 @@ export function ToyDetails() {
         setText("")
     }
 
-    async function onDeleteMessage(msgId) {
+
+    async function onDeleteMessage(msg) {
         try {
-            await toyService.deleteMessage(toyId, msgId)
-            setToyMessages(prev => prev.filter(msg => msg.id !== msgId))
+            await toyService.deleteMessage(toyId, msg.id)
+            await removeReview(msg.reviewId)   
+            setToyMessages(prev => prev.filter(m => m.id !== msg.id))
             showSuccessMsg("Message deleted")
         } catch (err) {
             console.log("Cannot delete message", err)
@@ -107,6 +115,7 @@ export function ToyDetails() {
                     loggedinUser={loggedinUser}
                 />
             </section>
+
             <button className="btn-back" onClick={() => navigate("/toy")}>
                 Back to list
             </button>

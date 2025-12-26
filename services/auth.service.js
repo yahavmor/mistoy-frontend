@@ -4,7 +4,7 @@ const STORAGE_KEY = 'loggedInUser'
 
 const api = axios.create({
   baseURL: '/api/auth/',
-  withCredentials: true, // allow cookies (sessions)
+  withCredentials: true,
 })
 
 export const authService = {

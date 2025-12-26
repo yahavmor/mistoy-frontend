@@ -23,12 +23,20 @@ export const toyService = {
 export async function query(filterBy = {}) {
     const queryParams = new URLSearchParams()
 
-    if (filterBy.txt) queryParams.set('txt', filterBy.txt)
+    if (filterBy.name) queryParams.set('name', filterBy.name)
+    if (filterBy.price) queryParams.set('price', filterBy.price)
+    if (filterBy.inStock) queryParams.set('inStock', filterBy.inStock)
+    if (filterBy.labels && filterBy.labels.length) {
+        filterBy.labels.forEach(label => queryParams.append('labels', label))
+    }
 
-    const res = await fetch(`/api/toy?${queryParams.toString()}`)
+    const queryStr = queryParams.toString()
+    const res = await fetch(`/api/toy${queryStr ? `?${queryStr}` : ''}`)
+
     if (!res.ok) throw new Error('Failed to fetch toys')
     return res.json()
 }
+
 
 async function deleteMessage(toyId, messageId) {
   const res = await fetch(`/api/toy/${toyId}/msg/${messageId}`, {
@@ -69,15 +77,15 @@ async function save(toy) {
     if (!res.ok) throw new Error('Failed to save toy')
     return res.json()
 }
-async function sendMessage(toyId, txt) {
-  const res = await fetch(`/api/toy/${toyId}/msg`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ txt })
-  });
+async function sendMessage(toyId, msg) {
+    const res = await fetch(`/api/toy/${toyId}/msg`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(msg)
+    })
 
-  if (!res.ok) throw new Error('Failed to send message');
-  return await res.json(); 
+    if (!res.ok) throw new Error('Failed to send message')
+    return res.json()
 }
 
 
@@ -97,7 +105,7 @@ function getFilterFromSearchParams(searchParams) {
         } else if (field === 'price') {
             filterBy.price = +searchParams.get(field) || 0
         } else if (field === 'inStock') {
-            filterBy.inStock = searchParams.get(field) === true
+            filterBy.inStock = searchParams.get(field) === 'true'
         } else {
             filterBy[field] = searchParams.get(field) || ''
         }
