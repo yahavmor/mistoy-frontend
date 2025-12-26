@@ -1,138 +1,115 @@
 import { useState, useEffect } from "react"
-import {useNavigate,useParams} from 'react-router-dom'
-import { setToy, setChat } from '../../store/toy.actions.js'
-import { useSelector } from 'react-redux'
-import { utilService } from "../../services/util.service.js"
-import { Popup } from "../cmps/Popup.jsx"
-import {showErrorMsg, showSuccessMsg} from '../../services/event-bus.service.js'
-import { ToyPreview } from "../cmps/ToyPreview.jsx"
+import { useNavigate, useParams } from "react-router-dom"
+import { useSelector } from "react-redux"
+
 import { toyService } from "../../services/toy.service.js"
+import { reviewService } from "../../services/review.service.js"
+
+import { setToy } from "../../store/toy.actions.js"
+import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service.js"
+
+import { ToyPreview } from "../cmps/ToyPreview.jsx"
 import { MessageList } from "../cmps/MessageList.jsx"
 
 
-
-
-
-
 export function ToyDetails() {
-    const toy = useSelector((state) => state.toy)    
-    const isChatOpen = useSelector((state) => state.chat)
-    const loggedinUser = useSelector((state) => state.user)
-    const {toyId} = useParams()
+
+    const toy = useSelector(state => state.toy)
+    const loggedinUser = useSelector(state => state.user)
+
+    const { toyId } = useParams()
     const navigate = useNavigate()
-    const [answer,setAnswer] = useState(null)
-    const [question,setQuestion] = useState("")
-    const [message, setMessage] = useState("")
+
+    const [text, setText] = useState("")        
     const [toyMessages, setToyMessages] = useState([])
+    const [reviews, setReviews] = useState([])
 
     useEffect(() => {
+        loadToy()
+    }, [toyId])
+
     async function loadToy() {
         try {
-            const loadedToy = await toyService.get(toyId)   
+            const loadedToy = await toyService.get(toyId)
             setToy(loadedToy._id)
-            setToyMessages(loadedToy.msgs || [])            
-            showSuccessMsg('Toy details loaded')
+
+            setToyMessages(loadedToy.msgs || [])
+
+            const toyReviews = await reviewService.query({ toyId })
+            setReviews(toyReviews)
+
+            showSuccessMsg("Toy details loaded")
         } catch (err) {
-            console.log('error is:', err)
-            showErrorMsg('Cannot load toy details')
-            navigate('/toy')
+            console.log("Cannot load toy", err)
+            showErrorMsg("Cannot load toy details")
+            navigate("/toy")
         }
     }
-    loadToy()
-}, [])
 
-    
-    function handleChat(){
-    setChat(!isChatOpen)
+
+
+    async function onSend() {
+        if (!text) return
+
+        try {
+            const savedMsg = await toyService.sendMessage(toyId, text)
+            setToyMessages(prev => [...prev, savedMsg])
+
+            await reviewService.add({
+                txt: text,
+                toyId,
+                userId: loggedinUser._id
+            })
+
+            showSuccessMsg("Message added!")
+        } catch (err) {
+            console.log("Cannot send", err)
+            showErrorMsg("Cannot send message")
+        }
+
+        setText("")
     }
 
-    function onBack() {
-        navigate('/toy')
-    }
-    function handleSend() {
-        if(!question) return
-        setAnswer(utilService.getRandAnswer())
-        setQuestion("")
-}
-
-async function onSendMessage() {
-    if (!message) return
-
-    try {
-        const savedMsg = await toyService.sendMessage(toyId, message)
-        setToyMessages(prev => [...prev, savedMsg])
-        showSuccessMsg('Your message has been sent!')
-    } catch (err) {
-        console.log('Cannot send message', err)
-        showErrorMsg('Cannot send message')
-    }
-
-    setMessage("")
-}
-
-
-function onDeleteReview(msgId) {
-    async function deleteReview() {
+    async function onDeleteMessage(msgId) {
         try {
             await toyService.deleteMessage(toyId, msgId)
-            setToyMessages(prevMessages => prevMessages.filter(msg => msg.id !== msgId))
-            showSuccessMsg('Message deleted successfully!')
-        }
-        catch(err){
-            console.log('Cannot delete message', err)
-            showErrorMsg('Cannot delete message')
+            setToyMessages(prev => prev.filter(msg => msg.id !== msgId))
+            showSuccessMsg("Message deleted")
+        } catch (err) {
+            console.log("Cannot delete message", err)
+            showErrorMsg("Cannot delete message")
         }
     }
-    deleteReview()
-}
 
     if (!toy) return <div>Loading...</div>
-    const inStock = toy.inStock? 'in-stock': 'sold-out'
-    const createdAt = utilService.timeAgo(toy.createdAt)
+
     return (
         <section className="toy-details">
-            <ToyPreview toy={toy}/>
 
-            {loggedinUser && <div className="message-box">
-                <label className="message-label">Add Message:</label>
+            <ToyPreview toy={toy} />
 
-                <div className="message-input-row">
+            {loggedinUser && (
+                <div className="message-box">
                     <input
                         type="text"
-                        className="message-input"
-                        onChange={(e) => setMessage(e.target.value)}
                         placeholder="Write a message..."
-                        value={message}
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
                     />
-
-                    <button className="send-btn" onClick={onSendMessage}>
-                        Send
-                    </button>
+                    <button onClick={onSend}>Send</button>
                 </div>
-            </div>
-            }    
-            <MessageList toyMessages={toyMessages} 
-            onDeleteReview={onDeleteReview} 
-            loggedinUser={loggedinUser}
-            />
+            )}
 
-            <button className="btn-back" onClick={onBack}>Back to list</button>
-
-            <Popup isOpen={isChatOpen} onClose={handleChat}>
-                <h2>Chat with us</h2>
-                <input
-                type="text"
-                placeholder="Write your question..."
-                value={question}
-                onChange={(e) => setQuestion(e.target.value)}
-                onKeyDown={(e) => {
-                    if (e.key === "Enter") handleSend()
-                }}
+            <section className="messages-section">
+                <MessageList
+                    toyMessages={toyMessages}
+                    onDeleteReview={onDeleteMessage}
+                    loggedinUser={loggedinUser}
                 />
-                <button className="btn-send" disabled={!question} onClick={handleSend}>Send</button>
-                {answer && <p>{answer}</p>}
-            </Popup>
-            <img className="chat-icon" src="chat-icon.png" alt="chat icon"  onClick={handleChat}/>
+            </section>
+            <button className="btn-back" onClick={() => navigate("/toy")}>
+                Back to list
+            </button>
 
         </section>
     )
