@@ -85,7 +85,11 @@ export function ToyDetails() {
             showSuccessMsg("Message deleted")
         } catch (err) {
             console.log("Cannot delete message", err)
-            showErrorMsg("Cannot delete message")
+            if (err.message.includes('401')) {
+                showErrorMsg("Unauthorized: Please login again to delete messages")
+            } else {
+                showErrorMsg("Cannot delete message")
+            }
         }
     }
 

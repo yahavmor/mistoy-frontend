@@ -20,9 +20,11 @@ export function MessageList( {toyMessages, onDeleteReview, loggedinUser} ) {
                                     <p className="message-text">{msg.txt}</p>
                                 </div>
 
-                                {loggedinUser?.isAdmin &&<button
-                                    className="delete-btn"
-                                    onClick={() => onDeleteReview(msg)}>Delete</button>}
+                                {loggedinUser && (loggedinUser.isAdmin || loggedinUser._id === msg.by._id) && (
+                                    <button
+                                        className="delete-btn"
+                                        onClick={() => onDeleteReview(msg)}>Delete</button>
+                                )}
                             </li>
                         ))}
                 </ul>

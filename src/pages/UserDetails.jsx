@@ -12,6 +12,7 @@ export function UserDetails() {
     const reviews = useSelector(state => state.reviews)
     const userReviews = reviews.filter(review => review.byUser._id === userId)
     const [user, setUser] = useState(null)
+    const [error, setError] = useState(null)
 
     useEffect(() => {
         loadUser()
@@ -19,10 +20,18 @@ export function UserDetails() {
     }, [userId])
 
     async function loadUser() {
-        const user = await userService.getById(userId)
-        setUser(user)
+        try {
+            const user = await userService.getById(userId)
+            setUser(user)
+            setError(null)
+        } catch (err) {
+            console.error('Failed to load user:', err)
+            setUser(null)
+            setError('User not found')
+        }
     }
 
+    if (error) return <div>{error}</div>
     if (!user) return <div>Loading...</div>
 
     return (

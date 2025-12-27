@@ -1,4 +1,4 @@
-const BASE_URL = '/api/user/'
+const BASE_URL = 'https://mister-backend.onrender.com/api/user/'
 
 export const userService = {
   query,
