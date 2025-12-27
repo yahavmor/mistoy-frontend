@@ -31,6 +31,8 @@ export function AppHeader() {
                     <NavLink to="/about">About</NavLink>
                     <NavLink to="/toy">Toys</NavLink>
                     <NavLink to="/dashboard">Dashboard</NavLink>
+                    <NavLink to="/reviews">Reviews</NavLink>
+
 
                     {!loggedinUser ? (
                         <NavLink to="/auth">Login / Sign-up</NavLink>

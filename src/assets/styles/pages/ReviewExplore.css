@@ -1,23 +1,16 @@
-.user-details {
+.review-explore {
     max-width: 900px;
     margin: auto;
     padding: 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.user-title {
+.title {
     text-align: center;
+    margin-bottom: 25px;
     font-size: 4rem;
     font-weight: 600;
     color: var(--clrbrightred);
-    margin-bottom: 10px;
-}
-
-.user-subtitle {
-    text-align: center;
-    font-size: 2rem;
-    color: var(--gray2);
-    margin-bottom: 30px;
 }
 
 .no-reviews {
@@ -32,7 +25,6 @@
     display: grid;
     gap: 20px;
 }
-
 .review-card {
     background: var(--bgcscarycolor);
     border-radius: 14px;
@@ -72,6 +64,12 @@
 .review-owner span {
     font-weight: 600;
     color: var(--clrhoveryellow);
+}
+
+.toy-name {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
 }
 
 .review-body {

@@ -11,6 +11,7 @@ import { ToyEdit } from './pages/ToyEdit.jsx'
 import { Dashboard } from './pages/Dashboard.jsx'
 import {LoginSignUp} from './pages/LoginSignUp.jsx'
 import {UserDetails} from './pages/UserDetails.jsx'
+import { ReviewExplore } from './pages/ReviewExplore.jsx'
 
 
 
@@ -34,7 +35,7 @@ export function RootCmp() {
                             <Route path="/toy/:toyId" element={<ToyDetails/>} />
                             <Route path="/auth" element={<LoginSignUp/>} />
                             <Route path="/user/:userId" element={<UserDetails/>} />
-
+                            <Route path="/reviews" element={<ReviewExplore />} />
 
 
                         </Routes>
