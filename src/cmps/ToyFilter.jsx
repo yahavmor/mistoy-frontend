@@ -119,7 +119,7 @@ export function ToyFilter({ filterBy, onSetFilterBy }) {
             ))}
           </Select>
 
-          <Box sx={{ display: "flex", gap: 2 }}>
+          <Box sx={{ display: "flex", gap: 2, justifyContent: "center"}}>
             <Button type="submit" variant="outlined">
               Apply
             </Button>
