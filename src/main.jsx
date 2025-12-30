@@ -3,7 +3,8 @@ import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { store } from '../store/store.js'
 
-import '../src/assets/styles/main.css'
+
+import './assets/styles/main.css'
 import App from './App.jsx'
 import "./i18n/i18n.js"; 
 
