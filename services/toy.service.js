@@ -3,15 +3,14 @@ import { utilService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 
 const TOY_KEY = 'toyDB'
+
 export const labels = [
   'On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle',
   'Outdoor', 'Battery Powered'
 ]
 
-// תמיד מדבר עם Render
 const BASE_URL = 'https://mister-backend.onrender.com/api/toy'
 
-// הגדרה גלובלית ל־Axios — שולח cookies אוטומטית
 axios.defaults.withCredentials = true
 
 export const toyService = {
@@ -33,13 +32,17 @@ async function query(filterBy = {}) {
   const params = {}
 
   if (filterBy.name) params.name = filterBy.name
-  if (filterBy.price) params.price = filterBy.price
-  if (filterBy.inStock) params.inStock = filterBy.inStock
-  if (filterBy.labels?.length) params.labels = filterBy.labels
+  if (filterBy.price !== undefined) params.price = filterBy.price
+  if (filterBy.inStock !== undefined) params.inStock = filterBy.inStock
+
+  if (filterBy.labels?.length) {
+    params.labels = filterBy.labels.join(',')
+  }
 
   const { data } = await axios.get(BASE_URL, { params })
   return data
 }
+
 
 async function get(toyId) {
   const { data } = await axios.get(`${BASE_URL}/${toyId}`)
