@@ -4,8 +4,9 @@ export const userService = {
   query,
   getById,
   remove,
-  getUserBugs,
+  getUserToys,
   getEmptyCredentials,
+  getLoggedinUser
 }
 
 async function query() {
@@ -43,13 +44,13 @@ async function remove(userId) {
   }
 }
 
-async function getUserBugs(userId) {
+async function getUserToys(userId) {
   try {
-    const res = await fetch(`${BASE_URL}${userId}/bugs`)
-    if (!res.ok) throw new Error(`Failed to load bugs for user ${userId}`)
+    const res = await fetch(`${BASE_URL}${userId}/toys`)
+    if (!res.ok) throw new Error(`Failed to load toys for user ${userId}`)
     return await res.json()
   } catch (err) {
-    console.error(`Failed to load bugs for user ${userId}:`, err)
+    console.error(`Failed to load toys for user ${userId}:`, err)
     throw err
   }
 }
@@ -60,4 +61,7 @@ function getEmptyCredentials() {
     password: '',
     fullname: '',
   }
+}
+function getLoggedinUser() {
+    return JSON.parse(sessionStorage.getItem('loggedinUser') || 'null')
 }

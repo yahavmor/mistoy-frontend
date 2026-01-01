@@ -9,6 +9,7 @@ export function ReviewExplore() {
     }, [])
 
     const reviews = useSelector(state => state.reviews)
+    if (!reviews) return <div>Loading...</div>
 
     return (
         <section className="review-explore">

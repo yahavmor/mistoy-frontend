@@ -11,6 +11,7 @@ import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service.j
 
 import { ToyPreview } from "../cmps/ToyPreview.jsx"
 import { MessageList } from "../cmps/MessageList.jsx"
+import { ChatRoom } from "../cmps/ChatRoom.jsx"
 
 export function ToyDetails() {
 
@@ -119,6 +120,7 @@ export function ToyDetails() {
                     loggedinUser={loggedinUser}
                 />
             </section>
+            <ChatRoom />
 
             <button className="btn-back" onClick={() => navigate("/toy")}>
                 Back to list
