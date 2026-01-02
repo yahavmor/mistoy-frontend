@@ -1,11 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
-import {
-    socketService,
-    SOCKET_EMIT_SEND_MSG,
-    SOCKET_EVENT_ADD_MSG,
-    SOCKET_EMIT_SET_TOPIC
-} from '../../services/socket.service.js'
+import {socketService,SOCKET_EMIT_SEND_MSG,SOCKET_EVENT_ADD_MSG,SOCKET_EMIT_SET_TOPIC} from '../../services/socket.service.js'
 
 export function ChatRoom({ toy }) {
     const loggedinUser = useSelector(state => state.user)
@@ -16,29 +11,24 @@ export function ChatRoom({ toy }) {
 
     const chatEndRef = useRef(null)
 
-    // קבלת הודעות חדשות
     useEffect(() => {
         socketService.on(SOCKET_EVENT_ADD_MSG, addMsg)
         return () => socketService.off(SOCKET_EVENT_ADD_MSG, addMsg)
     }, [])
 
-    // קבלת היסטוריה
     useEffect(() => {
         socketService.on('chat-history', history => setMsgs(history))
         return () => socketService.off('chat-history')
     }, [])
 
-    // עדכון topic לפי toy
     useEffect(() => {
         if (toy) setTopic(toy.name)
     }, [toy])
 
-    // שליחת topic לשרת
     useEffect(() => {
         if (topic) socketService.emit(SOCKET_EMIT_SET_TOPIC, topic)
     }, [topic])
 
-    // גלילה לסוף
     useEffect(() => {
         chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
     }, [msgs])
