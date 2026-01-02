@@ -1,7 +1,5 @@
-// ChatRoom.jsx
 import { useState, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
-
 import {
     socketService,
     SOCKET_EMIT_SEND_MSG,
@@ -9,82 +7,113 @@ import {
     SOCKET_EMIT_SET_TOPIC
 } from '../../services/socket.service.js'
 
-export function ChatRoom() {
+export function ChatRoom({ toy }) {
     const loggedinUser = useSelector(state => state.user)
 
     const [msg, setMsg] = useState({ txt: '' })
     const [msgs, setMsgs] = useState([])
-    const [topic, setTopic] = useState('general')
-    const [isBotMode, setIsBotMode] = useState(false)
+    const [topic, setTopic] = useState(toy ? toy.name : 'General')
 
-    const botTimeoutRef = useRef()
+    const chatEndRef = useRef(null)
 
-    // Listen to incoming messages
+    // קבלת הודעות חדשות
     useEffect(() => {
         socketService.on(SOCKET_EVENT_ADD_MSG, addMsg)
-
-        return () => {
-            socketService.off(SOCKET_EVENT_ADD_MSG, addMsg)
-            clearTimeout(botTimeoutRef.current)
-        }
+        return () => socketService.off(SOCKET_EVENT_ADD_MSG, addMsg)
     }, [])
 
-    // Join topic
+    // קבלת היסטוריה
     useEffect(() => {
-        socketService.emit(SOCKET_EMIT_SET_TOPIC, topic)
+        socketService.on('chat-history', history => setMsgs(history))
+        return () => socketService.off('chat-history')
+    }, [])
+
+    // עדכון topic לפי toy
+    useEffect(() => {
+        if (toy) setTopic(toy.name)
+    }, [toy])
+
+    // שליחת topic לשרת
+    useEffect(() => {
+        if (topic) socketService.emit(SOCKET_EMIT_SET_TOPIC, topic)
     }, [topic])
+
+    // גלילה לסוף
+    useEffect(() => {
+        chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }, [msgs])
 
     function addMsg(newMsg) {
         setMsgs(prev => [...prev, newMsg])
     }
 
-    function sendBotResponse() {
-        clearTimeout(botTimeoutRef.current)
-        botTimeoutRef.current = setTimeout(() => {
-            addMsg({ from: 'Bot', txt: 'You are amazing!' })
-        }, 1200)
-    }
-
     function sendMsg(ev) {
         ev.preventDefault()
+        if (!msg.txt.trim()) return
 
-        const from = loggedinUser?.fullname || 'Me'
-        const newMsg = { from, txt: msg.txt }
+        const newMsg = {
+            from: loggedinUser?.fullname || 'Guest',
+            txt: msg.txt.trim(),
+            userId: loggedinUser?._id || null
+        }
 
         socketService.emit(SOCKET_EMIT_SEND_MSG, newMsg)
-
-        if (isBotMode) sendBotResponse()
-
         setMsg({ txt: '' })
     }
 
-    function handleFormChange(ev) {
-        const { name, value } = ev.target
-        setMsg(prev => ({ ...prev, [name]: value }))
+    function clearMsgs(ev) {
+        ev.preventDefault()
+        setMsgs([])
+
+        socketService.emit('chat-clear-topic', {
+            topic,
+            userId: loggedinUser?._id
+        })
     }
 
     return (
-        <section className="chat">
-            <h2>Chat about: {topic}</h2>
+        <section className="chat-room">
+            <header className="chat-room-header">
+                <h2 className="chat-room-title">
+                    Chat about: <span>{topic}</span>
+                </h2>
+            </header>
 
-            <form onSubmit={sendMsg}>
-                <input
-                    type="text"
-                    name="txt"
-                    value={msg.txt}
-                    onChange={handleFormChange}
-                    autoComplete="off"
-                />
-                <button>Send</button>
-            </form>
-
-            <ul>
+            <ul className="chat-messages">
                 {msgs.map((msg, idx) => (
-                    <li key={idx}>
+                    <li key={idx} className="chat-message">
                         <strong>{msg.from}:</strong> {msg.txt}
                     </li>
                 ))}
+                <div ref={chatEndRef} />
             </ul>
+
+            <form className="chat-input-area" onSubmit={sendMsg}>
+                <input
+                    className="chat-input"
+                    type="text"
+                    name="txt"
+                    placeholder="Type your message..."
+                    value={msg.txt}
+                    onChange={ev => setMsg({ txt: ev.target.value })}
+                    autoComplete="off"
+                />
+
+                <div className="chat-actions">
+                    <button className="chat-btn send" disabled={!msg.txt.trim()}>
+                        Send
+                    </button>
+
+                    <button
+                        className="chat-btn clear"
+                        type="button"
+                        onClick={clearMsgs}
+                        disabled={!msgs.length}
+                    >
+                        Clear chat
+                    </button>
+                </div>
+            </form>
         </section>
     )
 }

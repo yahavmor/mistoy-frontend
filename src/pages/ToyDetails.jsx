@@ -120,7 +120,7 @@ export function ToyDetails() {
                     loggedinUser={loggedinUser}
                 />
             </section>
-            <ChatRoom />
+            <ChatRoom toy={toy} />
 
             <button className="btn-back" onClick={() => navigate("/toy")}>
                 Back to list
