@@ -8,6 +8,8 @@ export function ChatRoom({ toy }) {
     const [msg, setMsg] = useState({ txt: '' })
     const [msgs, setMsgs] = useState([])
     const [topic, setTopic] = useState(toy ? toy.name : 'General')
+    const [isTyping, setIsTyping] = useState(false)
+    const [typingUser, setTypingUser] = useState(null)
 
     const chatEndRef = useRef(null)
 
@@ -32,6 +34,22 @@ export function ChatRoom({ toy }) {
     useEffect(() => {
         chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
     }, [msgs])
+
+    useEffect(() => {
+    socketService.on('user-typing', (data) => {
+        setTypingUser(data.from)
+            setIsTyping(true)
+
+            const timeout = setTimeout(() => {
+                setIsTyping(false)
+                setTypingUser(null)
+            }, 1500)
+
+            return () => clearTimeout(timeout)
+        })
+        return () => socketService.off('user-typing')
+    }, [])
+
 
     function addMsg(newMsg) {
         setMsgs(prev => [...prev, newMsg])
@@ -61,6 +79,19 @@ export function ChatRoom({ toy }) {
         })
     }
 
+
+    
+    function handleChange(ev) {
+        const { value } = ev.target
+        setMsg({ txt: value })
+
+    socketService.emit('user-typing', { 
+        topic,
+        from: loggedinUser?.fullname || 'Guest'
+    })
+    } 
+    console.log('msgs:', msgs);
+
     return (
         <section className="chat-room">
             <header className="chat-room-header">
@@ -78,6 +109,10 @@ export function ChatRoom({ toy }) {
                 <div ref={chatEndRef} />
             </ul>
 
+            <div className='is-typing'>
+                {isTyping && <span>{typingUser || 'Guest'} is typing...</span>}
+            </div>
+
             <form className="chat-input-area" onSubmit={sendMsg}>
                 <input
                     className="chat-input"
@@ -85,7 +120,7 @@ export function ChatRoom({ toy }) {
                     name="txt"
                     placeholder="Type your message..."
                     value={msg.txt}
-                    onChange={ev => setMsg({ txt: ev.target.value })}
+                    onChange={handleChange}
                     autoComplete="off"
                 />
 
