@@ -5,6 +5,7 @@ import {socketService,SOCKET_EMIT_SEND_MSG,SOCKET_EVENT_ADD_MSG,SOCKET_EMIT_SET_
 export function ChatRoom({ toy }) {
     const loggedinUser = useSelector(state => state.user)
 
+
     const [msg, setMsg] = useState({ txt: '' })
     const [msgs, setMsgs] = useState([])
     const [topic, setTopic] = useState(toy ? toy.name : 'General')
@@ -49,6 +50,15 @@ export function ChatRoom({ toy }) {
         })
         return () => socketService.off('user-typing')
     }, [])
+    useEffect(() => {
+        socketService.on('admin-shop-update', data => {
+            alert(data.msg) 
+        })
+
+        return () => socketService.off('admin-shop-update')
+    }, [])
+
+
 
 
     function addMsg(newMsg) {

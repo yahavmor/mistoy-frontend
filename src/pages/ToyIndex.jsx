@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 import { ToyList } from '../cmps/ToyList.jsx'
 import { useEffect, useRef, useState } from 'react'
-import { loadToys, removeToy } from '../../store/toy.actions.js'
+import { loadToys, removeToy} from '../../store/toy.actions.js'
 import { OnlineStatus } from '../cmps/OnlineStatus.jsx'
 import { ToyFilter } from '../cmps/ToyFilter.jsx'
 import { useSearchParams } from 'react-router-dom'
@@ -37,7 +37,7 @@ useEffect(() => {
     async function remove(){
       try{
         await removeToy(toyId)
-        showSuccessMsg('Toy removed')
+        showSuccessMsg('Toy removed')        
       }
       catch{
         showErrorMsg('Cannot remove toy')

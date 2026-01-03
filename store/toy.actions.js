@@ -49,3 +49,4 @@ export function setUser(user) {
 export function setIsSignUp(isSignUp) {
   return store.dispatch({ type: IS_SIGNUP, isSignUp })
 }
+

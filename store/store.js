@@ -13,6 +13,8 @@ export const IS_SIGNUP = 'IS_SIGNUP'
 export const SET_REVIEWS = 'SET_REVIEWS'
 export const ADD_REVIEW = 'ADD_REVIEW'
 export const REMOVE_REVIEW = 'REMOVE_REVIEW'
+export const IS_ADMIN_CHANGED = 'IS_ADMIN_CHANGED'
+
 
 const savedUser = JSON.parse(sessionStorage.getItem('loggedinUser'))
 
