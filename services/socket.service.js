@@ -24,8 +24,10 @@ function createSocketService() {
 
     const socketService = {
         setup() {
-            socket = io(baseUrl, { withCredentials: true })
-
+        socket = io(baseUrl, {
+        withCredentials: true,
+        transports: ["websocket"]  
+        })
             const user = userService.getLoggedinUser()
             if (user) this.login(user._id)
         },
