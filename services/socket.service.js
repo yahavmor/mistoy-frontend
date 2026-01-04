@@ -9,7 +9,9 @@ export const SOCKET_EVENT_ADD_MSG = 'chat-add-msg'
 const SOCKET_EMIT_LOGIN = 'set-user-socket'
 const SOCKET_EMIT_LOGOUT = 'unset-user-socket'
 
-const baseUrl = import.meta.env.PROD ? '' : 'http://localhost:3030'
+const baseUrl = import.meta.env.PROD
+    ? 'https://mistoy-backend.onrender.com'
+    : 'http://localhost:3030'
 
 export const socketService = createSocketService()
 
